@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #111;
+  color: #fff;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 10px;
+}
+
+#container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+#player {
+  flex: 0 0 640px;
+}
+
+#lyricsPanel {
+  flex: 0 0 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#modeBtn,
+#loadBtn,
+#saveBtn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#modeBtn {
+  background: gold;
+  color: #111;
+}
+
+.lang-toggle label {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+#lyrics {
+  width: 100%;
+  height: 360px;
+  overflow-y: auto;
+  background: #1b1b1b;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: left;
+}
+
+.line {
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 6px;
+}
+
+.line:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.highlight {
+  background: rgba(255, 215, 0, 0.5);
+}

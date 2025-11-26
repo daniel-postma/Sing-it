@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube Lyric Sync Player</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>🎵 YouTube Lyric Sync</h1>
+
+    <div id="container">
+      <div id="player"></div>
+
+      <div id="lyricsPanel">
+        <div id="controls">
+          <button id="modeBtn">Switch to Edit Mode</button>
+
+          <div class="lang-toggle">
+            <label><input type="checkbox" id="showRomaji" /> Romaji</label>
+            <label><input type="checkbox" id="showEnglish" /> English</label>
+            <label
+              ><input type="checkbox" id="showKanji" checked /> Kanji</label
+            >
+          </div>
+
+          <button id="loadBtn">Load Song</button>
+          <button id="saveBtn">Export JSON</button>
+          <input
+            type="file"
+            id="fileInput"
+            accept=".json"
+            style="display: none"
+          />
+        </div>
+        <div id="lyrics"></div>
+      </div>
+    </div>
+
+    <script>
+      let tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(tag);
+    </script>
+
+    <script src="script.js"></script>
+  </body>
+</html>
