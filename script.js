@@ -10,9 +10,12 @@ const modeBtn = document.getElementById("modeBtn");
 const loadBtn = document.getElementById("loadBtn");
 const saveBtn = document.getElementById("saveBtn");
 const fileInput = document.getElementById("fileInput");
+
 const showKanji = document.getElementById("showKanji");
+const showKana = document.getElementById("showKana");
 const showRomaji = document.getElementById("showRomaji");
 const showEnglish = document.getElementById("showEnglish");
+const showVocab = document.getElementById("showVocab"); // ← NEW
 
 function extractVideoId(urlOrId) {
   if (!urlOrId) return "";
@@ -32,6 +35,7 @@ function onYouTubeIframeAPIReady() {
   });
 }
 
+// Load default song
 fetch("mou_ichido.json")
   .then((response) => response.json())
   .then((json) => {
@@ -51,26 +55,56 @@ function renderLyrics() {
     div.className = "line";
 
     let content = [];
-    if (showRomaji.checked) content.push(`<div>${line.romaji}</div>`);
-    if (showEnglish.checked) content.push(`<div>${line.english}</div>`);
-    if (showKanji.checked) content.push(`<div>${line.kanji}</div>`);
 
-    const showTime = mode === "edit" && line.time !== null;
-    if (showTime)
+    // ORDER: Kanji → Kana → Romaji → English → Vocab
+    if (showKanji.checked && line.kanji) {
+      content.push(`<div class="kanji-line">${line.kanji}</div>`);
+    }
+
+    if (showKana.checked && line.kana) {
+      content.push(`<div class="kana-line">${line.kana}</div>`);
+    }
+
+    if (showRomaji.checked && line.romaji) {
+      content.push(`<div class="romaji-line">${line.romaji}</div>`);
+    }
+
+    if (showEnglish.checked && line.english) {
+      content.push(`<div class="english-line">${line.english}</div>`);
+    }
+
+    // NEW: vocab line (short conceptual defs, precomputed in JSON)
+    if (showVocab.checked && line.vocab) {
+      content.push(`<div class="vocab-line">${line.vocab}</div>`);
+    }
+
+    const showTime =
+      mode === "edit" && line.time !== null && line.time !== undefined;
+    if (showTime) {
       content.push(
-        `<div style='color:gray;font-size:12px;'>(${line.time.toFixed(
+        `<div style="color:gray;font-size:12px;">(${line.time.toFixed(
           1
         )}s)</div>`
       );
+    }
+
+    // Fallback if nothing is toggled on
+    if (content.length === 0) {
+      const fallback =
+        line.kanji || line.kana || line.romaji || line.english || "";
+      content.push(`<div class="kanji-line">${fallback}</div>`);
+    }
 
     div.innerHTML = content.join("");
     div.onclick = () => handleLineClick(i);
     lyricsContainer.appendChild(div);
   });
 
-  document.querySelector(
-    "h1"
-  ).textContent = `🎵 ${currentSong.title} - ${currentSong.artist}`;
+  if (currentSong?.title && currentSong?.artist) {
+    document.querySelector(
+      "h1"
+    ).textContent = `🎵 ${currentSong.title} - ${currentSong.artist}`;
+  }
 
   // Hide or show buttons depending on mode
   if (mode === "play") {
@@ -101,9 +135,10 @@ modeBtn.onclick = () => {
   renderLyrics();
 };
 
-[showKanji, showRomaji, showEnglish].forEach((cb) =>
-  cb.addEventListener("change", renderLyrics)
-);
+// Re-render when any visibility toggle changes
+[showKanji, showKana, showRomaji, showEnglish, showVocab].forEach((cb) => {
+  if (cb) cb.addEventListener("change", renderLyrics);
+});
 
 loadBtn.onclick = () => fileInput.click();
 
@@ -156,7 +191,9 @@ setInterval(() => {
   let idx = -1;
 
   for (let i = 0; i < lyrics.length; i++) {
-    if (lyrics[i].time && lyrics[i].time <= time) idx = i;
+    if (typeof lyrics[i].time === "number" && lyrics[i].time <= time) {
+      idx = i;
+    }
   }
 
   if (idx !== highlightIndex) {
@@ -166,7 +203,7 @@ setInterval(() => {
 
     if (idx >= 0) {
       const lineEl = lines[idx];
-      const offset = Math.max(0, lineEl.offsetTop - 149);
+      const offset = Math.max(0, lineEl.offsetTop - 169);
       lyricsContainer.scrollTo({ top: offset, behavior: "smooth" });
     }
   }
