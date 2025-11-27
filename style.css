@@ -82,3 +82,23 @@ h1 {
 .highlight {
   background: rgba(255, 215, 0, 0.5);
 }
+
+.song-arrow {
+  font-size: 1.8rem;
+  padding: 0.3rem 1rem;
+  border-radius: 8px;
+  background: #ffffff10;
+  border: 1px solid #ffffff40;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.song-arrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.song-arrow:not(:disabled):hover {
+  background: #ffffff25;
+  transform: translateY(-2px);
+}
