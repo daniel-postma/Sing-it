@@ -10,7 +10,8 @@
       "romaji": "Ano hi miwatashita nagisa o",
       "english": "That day, the shoreline we looked over",
       "time": 23,
-      "vocab": "あの日: that day; 見渡した: looked over; 渚: shoreline"
+      "vocab": "あの日: that day; 見渡した: looked over; 渚: shoreline",
+      "japaneseVocab": "あの日: ある特定の過去の一日; 見渡した: 広い範囲を一度に見回した; 渚: 海や湖の水際の場所"
     },
     {
       "kanji": "今も思い出すんだ",
@@ -18,7 +19,8 @@
       "romaji": "Ima mo omoi dasun da",
       "english": "Even now, it still comes back to me",
       "time": 27.8,
-      "vocab": "今も: even now; 思い出す: recall, remember"
+      "vocab": "今も: even now; 思い出す: recall, remember",
+      "japaneseVocab": "今も: 今になっても変わらずという状態; 思い出す: 過去の出来事や人を心に浮かべる"
     },
     {
       "kanji": "砂の上に刻んだ言葉",
@@ -26,7 +28,8 @@
       "romaji": "Suna no ue ni kizanda kotoba",
       "english": "Words we carved into the sand",
       "time": 33.1,
-      "vocab": "砂: sand; 上: on top; 刻んだ: carved; 言葉: words"
+      "vocab": "砂: sand; 上: on top; 刻んだ: carved; 言葉: words",
+      "japaneseVocab": "砂: 細かい粒になった土や岩; 上: ある物や場所より高い所・表面; 刻んだ: 文字や模様などを削って入れた; 言葉: 物事や気持ちを表す単語や表現"
     },
     {
       "kanji": "君の後ろ姿",
@@ -34,7 +37,8 @@
       "romaji": "Kimi no ushiro sugata",
       "english": "Your figure as you walked away",
       "time": 38.1,
-      "vocab": "君: you (dear); 後ろ姿: someone’s back, departing figure"
+      "vocab": "君: you (dear); 後ろ姿: someone’s back, departing figure",
+      "japaneseVocab": "君: 親しい相手を呼ぶときの二人称; 後ろ姿: 人を後ろ側から見たときの姿"
     },
     {
       "kanji": "寄り返す波が",
@@ -42,7 +46,8 @@
       "romaji": "Yorikaesu nami ga",
       "english": "The waves that keep rolling in and out",
       "time": 43.2,
-      "vocab": "寄り返す: surge in and back; 波: waves"
+      "vocab": "寄り返す: surge in and back; 波: waves",
+      "japaneseVocab": "寄り返す: 打ち寄せては引いていく動きをくり返す; 波: 風や流れによって水面にできるうねり"
     },
     {
       "kanji": "足元をよぎり何かを攫う",
@@ -50,7 +55,8 @@
       "romaji": "Ashimoto o yogiri nanika o sarau",
       "english": "Brush past our feet and steal something away",
       "time": 46.3,
-      "vocab": "足元: at one’s feet; よぎり: pass by; 攫う: snatch away"
+      "vocab": "足元: at one’s feet; よぎり: pass by; 攫う: snatch away",
+      "japaneseVocab": "足元: 足のあたり・足のまわりの場所; よぎり: 横切って通り過ぎること; 攫う: 急に取って持ち去る"
     },
     {
       "kanji": "夕凪の中",
@@ -58,7 +64,8 @@
       "romaji": "Yūnagi no naka",
       "english": "In the evening calm over the sea",
       "time": 53.4,
-      "vocab": "夕凪: evening sea calm; 中: inside, within"
+      "vocab": "夕凪: evening sea calm; 中: inside, within",
+      "japaneseVocab": "夕凪: 夕方に風がやんで海が静かになる状態; 中: ある範囲や状況の内側"
     },
     {
       "kanji": "夕暮れだけが通り過ぎて行く",
@@ -66,7 +73,8 @@
       "romaji": "Yūgure dake ga tōrisugite iku",
       "english": "Only dusk quietly passes by",
       "time": 56.4,
-      "vocab": "夕暮れ: dusk; だけ: only; 通り過ぎて行く: pass on by"
+      "vocab": "夕暮れ: dusk; だけ: only; 通り過ぎて行く: pass on by",
+      "japaneseVocab": "夕暮れ: 日が沈む頃の時間帯; だけ: それ以外はないことを表す語; 通り過ぎて行く: その場を通って先へ行ってしまう"
     }
   ]
 }

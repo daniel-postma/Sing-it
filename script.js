@@ -16,6 +16,7 @@ const showKana = document.getElementById("showKana");
 const showRomaji = document.getElementById("showRomaji");
 const showEnglish = document.getElementById("showEnglish");
 const showVocab = document.getElementById("showVocab");
+const showTeigi = document.getElementById("showTeigi"); // ★ 日本語定義
 
 const prevSongBtn = document.getElementById("prevSong");
 const nextSongBtn = document.getElementById("nextSong");
@@ -102,11 +103,12 @@ function renderLyrics() {
 
     const parts = [];
 
-    if (showKanji.checked && line.kanji) parts.push(`<div>${line.kanji}</div>`);
-    if (showKana.checked && line.kana) parts.push(`<div>${line.kana}</div>`);
-    if (showRomaji.checked && line.romaji)
+    if (showKanji?.checked && line.kanji)
+      parts.push(`<div>${line.kanji}</div>`);
+    if (showKana?.checked && line.kana) parts.push(`<div>${line.kana}</div>`);
+    if (showRomaji?.checked && line.romaji)
       parts.push(`<div>${line.romaji}</div>`);
-    if (showEnglish.checked && line.english)
+    if (showEnglish?.checked && line.english)
       parts.push(`<div>${line.english}</div>`);
 
     if (parts.length === 0) parts.push(`<div>&nbsp;</div>`);
@@ -137,20 +139,53 @@ function handleLineClick(i) {
 ============================================= */
 
 function showVocabForLine(line) {
-  if (!showVocab.checked || !line?.vocab) {
+  if (!line) {
     vocabPanel.innerHTML = "";
     return;
   }
 
-  const list = line.vocab.split(";").map((x) => x.trim());
-  vocabPanel.innerHTML = list
-    .map((w) => `<div class="vocab-word">${w}</div>`)
-    .join("");
+  const chunks = [];
+
+  // English-style vocab
+  if (showVocab?.checked && line.vocab) {
+    const list = line.vocab
+      .split(";")
+      .map((x) => x.trim())
+      .filter(Boolean);
+    chunks.push(...list.map((w) => `<div class="vocab-word">${w}</div>`));
+  }
+
+  // 日本語定義
+  if (showTeigi?.checked && line.japaneseVocab) {
+    const listJ = line.japaneseVocab
+      .split(";")
+      .map((x) => x.trim())
+      .filter(Boolean);
+    chunks.push(...listJ.map((w) => `<div class="vocab-word jp">${w}</div>`));
+  }
+
+  if (chunks.length === 0) {
+    vocabPanel.innerHTML = "";
+  } else {
+    vocabPanel.innerHTML = chunks.join("");
+  }
 }
 
-/* Toggles re-render lyrics */
-[showKanji, showKana, showRomaji, showEnglish, showVocab].forEach((cb) => {
-  cb.addEventListener("change", renderLyrics);
+/* Lyric-display toggles */
+[showKanji, showKana, showRomaji, showEnglish].forEach((cb) => {
+  if (cb) cb.addEventListener("change", renderLyrics);
+});
+
+/* Vocab-panel toggles */
+[showVocab, showTeigi].forEach((cb) => {
+  if (cb)
+    cb.addEventListener("change", () => {
+      if (highlightIndex >= 0 && lyrics[highlightIndex]) {
+        showVocabForLine(lyrics[highlightIndex]);
+      } else {
+        vocabPanel.innerHTML = "";
+      }
+    });
 });
 
 /* =============================================
@@ -166,7 +201,7 @@ nextSongBtn.addEventListener("click", () => {
 });
 
 /* =============================================
-   LYRIC HIGHLIGHT LOOP
+   SPEED SLIDER
 ============================================= */
 
 if (speedSlider) {
@@ -200,6 +235,10 @@ if (speedSlider) {
     }
   });
 }
+
+/* =============================================
+   LYRIC HIGHLIGHT LOOP
+============================================= */
 
 setInterval(() => {
   if (!player?.getCurrentTime) return;

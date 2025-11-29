@@ -10,7 +10,8 @@
       "romaji": "Nee itsu ni nareba kimi ni aeru no?",
       "english": "Hey, when will I be able to see you again?",
       "time": 32.45964495613098,
-      "vocab": "ねえ: hey; いつになれば: when will it be, how long until; 君に: to you, for you; 会える: can meet; の: question-ending particle adding emotion"
+      "vocab": "ねえ: hey; いつになれば: when will it be, how long until; 君に: to you, for you; 会える: can meet; の: question-ending particle adding emotion",
+      "japaneseVocab": "ねえ: 親しい相手に呼びかけて注意を向けさせるときに使う言葉。; いつになれば: あることが実現する時期がいつなのかをたずねる言い方。; 君に: 話し相手を指す「君」に、動作の向かう先を表す助詞「に」が付いた形。; 会える: 「会う」の可能形で、実際に会うことができるという意味。; の: 文末に置き、疑問や感情をやわらかく表す終助詞。"
     },
     {
       "kanji": "ねえ いつになれば世界は戻るの？",
@@ -18,7 +19,8 @@
       "romaji": "Nee itsu ni nareba sekai wa modoru no?",
       "english": "Hey, when will the world return to normal?",
       "time": 39.82352590463257,
-      "vocab": "ねえ: hey; いつになれば: when will it be, how long until; 世界は: as for the world; 戻る: to return, go back; の: question-ending particle adding emotion; 世界: world; は: topic marker"
+      "vocab": "ねえ: hey; いつになれば: when will it be, how long until; 世界は: as for the world; 戻る: to return, go back; の: question-ending particle adding emotion; 世界: world; は: topic marker",
+      "japaneseVocab": "ねえ: 親しい相手に呼びかけるときの一言。; いつになれば: 物事が実現する時期がいつかをたずねる表現。; 世界は: 「世界」を主題として取り上げる言い方。; 戻る: 元の状態・場所などにかえること。; の: 文末で疑問や感情をやわらかく表す終助詞。; 世界: 人間社会や地球全体を指すことば。; は: 文の話題・主題を示す助詞。"
     },
     {
       "kanji": "あとどれくらい続いてくのだろう？",
@@ -26,7 +28,8 @@
       "romaji": "Ato dore kurai tsuzuiteku no darou?",
       "english": "I wonder how much longer this will continue",
       "time": 46.116611948501586,
-      "vocab": "あとどれくらい: how much longer, how much more; 続いてく: continue on, keep going; の: nominalizer (the fact that…); だろう: I wonder, probably"
+      "vocab": "あとどれくらい: how much longer, how much more; 続いてく: continue on, keep going; の: nominalizer (the fact that…); だろう: I wonder, probably",
+      "japaneseVocab": "あとどれくらい: 現在の状態がこの先どの程度の長さまで続くのかをたずねる言い方。; 続いてく: 物事が途切れずに先へ先へと続いていくこと。; の: 文全体を名詞化して「〜ということ」という意味にする助詞。; だろう: 話し手の推量や「〜かな」という気持ちを表す終止形。"
     },
     {
       "kanji": "とても暗い足元の日々よ",
@@ -34,7 +37,8 @@
       "romaji": "Totemo kurai ashimoto no hibi yo",
       "english": "Oh, these dark days beneath my feet",
       "time": 50.55713891989136,
-      "vocab": "とても: very; 暗い: dark; 足元の日々: the days beneath my feet, around me; よ: sentence-ending particle adding emphasis; 足元: at one’s feet, surroundings; 日々: days, day after day"
+      "vocab": "とても: very; 暗い: dark; 足元の日々: the days beneath my feet, around me; よ: sentence-ending particle adding emphasis; 足元: at one’s feet, surroundings; 日々: days, day after day",
+      "japaneseVocab": "とても: 程度が大きいことを強く表す副詞。「たいへん」「すごく」に近い。; 暗い: 光が少なくてよく見えない、または気持ちが沈んで明るさがない様子。; 足元の日々: 自分の身の回りで過ごしている毎日の時間。; よ: 自分の思いを強く伝えたり、相手に呼びかけるときに使う終助詞。; 足元: 自分の足のまわり、そこから転じて自分を取り巻く状況。; 日々: 毎日が積み重なっていく感じを伴う「日ごと」。"
     },
     {
       "kanji": "ごめん 辛い 目に見えぬ恐怖に",
@@ -42,7 +46,8 @@
       "romaji": "Gomen tsurai me ni mienu kyōfu ni",
       "english": "Sorry, it’s painful — the invisible fear",
       "time": 54.51085904959106,
-      "vocab": "ごめん: sorry; 辛い: painful, emotionally hard; 目に見えぬ恐怖に: into the invisible fear; 目に見えぬ: invisible (literally “not seen by the eye”); 恐怖: fear, terror"
+      "vocab": "ごめん: sorry; 辛い: painful, emotionally hard; 目に見えぬ恐怖に: into the invisible fear; 目に見えぬ: invisible (literally “not seen by the eye”); 恐怖: fear, terror",
+      "japaneseVocab": "ごめん: 自分のしたことについて謝るときのくだけた言い方。; 辛い: 心や体に負担が大きくて耐えるのがむずかしい状態。; 目に見えぬ恐怖に: 形がなく目には見えないが、強く感じられるこわさの中へ。; 目に見えぬ: 実際には存在するが、目で確認できない様子。; 恐怖: 強い不安やおそれの気持ち。"
     },
     {
       "kanji": "心砕かれて諦めてしまいそう",
@@ -50,7 +55,8 @@
       "romaji": "Kokoro kudakarete akirameteshimaisō",
       "english": "My heart feels shattered — I’m about to give up",
       "time": 58,
-      "vocab": "心砕かれて: with my heart shattered; 諦めてしまいそう: feel like I’m going to give up completely; 心: heart, feelings; 砕かれて: shattered, broken; 諦める: to give up; 〜てしまう: completely, regrettably (auxiliary nuance)"
+      "vocab": "心砕かれて: with my heart shattered; 諦めてしまいそう: feel like I’m going to give up completely; 心: heart, feelings; 砕かれて: shattered, broken; 諦める: to give up; 〜てしまう: completely, regrettably (auxiliary nuance)",
+      "japaneseVocab": "心砕かれて: 心がバラバラになったように深く傷ついた状態で。; 諦めてしまいそう: もう続けられないと思って投げ出してしまいそうに感じている様子。; 心: 感情や考えなど、人の内面を表すことば。; 砕かれて: こわれて細かくなってしまうこと。; 諦める: 望んでいたことをあきらめ、もう求めないことにする。; 〜てしまう: 動作がすっかり完了してしまうことや、残念な感じを添える助動詞。"
     },
     {
       "kanji": "手を取り合い もう一度",
@@ -58,7 +64,8 @@
       "romaji": "Te o toriai mōichido",
       "english": "Let’s hold hands once more",
       "time": 63.39467604196167,
-      "vocab": "手を取り合い: join hands, take each other’s hands; もう一度: once more, one more time; 手: hand; 取り合う: to take each other’s hands, to mutually grasp"
+      "vocab": "手を取り合い: join hands, take each other’s hands; もう一度: once more, one more time; 手: hand; 取り合う: to take each other’s hands, to mutually grasp",
+      "japaneseVocab": "手を取り合い: おたがいの手をつかみ合って結びつくこと。協力し合うイメージ。; もう一度: すでに一度したことを、再び行うこと。; 手: からだの一部で、物をにぎったり触れたりするところ。; 取り合う: 互いに取り合って一つにつながる、または奪い合うこと。"
     },
     {
       "kanji": "共に夜明けを迎えよう",
@@ -66,7 +73,8 @@
       "romaji": "Tomoni yoake o mukaeyou",
       "english": "And greet the dawn together",
       "time": 69.07313703814697,
-      "vocab": "共に: together; 夜明けを: the dawn (as object); 迎えよう: let’s welcome, let’s greet; 夜明け: dawn, daybreak"
+      "vocab": "共に: together; 夜明けを: the dawn (as object); 迎えよう: let’s welcome, let’s greet; 夜明け: dawn, daybreak",
+      "japaneseVocab": "共に: いっしょに、同じ方向を向いて行動するさま。; 夜明けを: 夜が終わり、空が明るくなり始める時を対象として。; 迎えよう: こちらからその時や人を受け入れに行こうという意志を表す「迎える」の意向形。; 夜明け: 夜がしだいに明るくなり、新しい一日が始まるころ。"
     },
     {
       "kanji": "終わりのない不安も 戻りはしない時間も",
@@ -74,7 +82,8 @@
       "romaji": "Owari no nai fuan mo modori wa shinai jikan mo",
       "english": "Even endless worries and time that won’t return",
       "time": 72.83112099809266,
-      "vocab": "終わりのない: endless, never-ending; 不安も: anxiety too, even this anxiety; 戻りはしない: will not return; 時間も: time as well; 不安: anxiety, unease; 終わり: end; 戻り: return; 時間: time"
+      "vocab": "終わりのない: endless, never-ending; 不安も: anxiety too, even this anxiety; 戻りはしない: will not return; 時間も: time as well; 不安: anxiety, unease; 終わり: end; 戻り: return; 時間: time",
+      "japaneseVocab": "終わりのない: 終点が見えず、いつまで続くかわからない様子。; 不安も: 心が落ち着かず心配な気持ちもまた。; 戻りはしない: 二度と元の状態には戻らないことを強く言い切る表現。; 時間も: 流れ去ってしまった時そのものもまた。; 不安: 先のことが心配で、落ち着かない心の状態。; 終わり: 物事がしめくくられて終結するところ。; 戻り: 一度離れたものがまた元の場所や状態にかえること。; 時間: 過去から未来へと一方向に流れていく、長さとして感じられるもの。"
     },
     {
       "kanji": "抱きしめて進むから",
@@ -82,7 +91,8 @@
       "romaji": "Dakishimete sumu kara",
       "english": "We’ll embrace them and move forward",
       "time": 76.36112410490418,
-      "vocab": "抱きしめて: holding tight, embracing; 進む: move forward, go on; から: because, so (giving a reason)"
+      "vocab": "抱きしめて: holding tight, embracing; 進む: move forward, go on; から: because, so (giving a reason)",
+      "japaneseVocab": "抱きしめて: 両腕でしっかりと抱き寄せるようにして大切にすること。; 進む: 前のほうへ向かって動いたり、物事を先へと展開させたりすること。; から: 前に述べた内容が理由・原因であることを示す接続助詞。"
     },
     {
       "kanji": "手を取り合い もう一度",
@@ -90,7 +100,8 @@
       "romaji": "Te o toriai mōichido",
       "english": "Let’s hold hands once more",
       "time": 80.12092185694885,
-      "vocab": "手を取り合い: join hands, take each other’s hands; もう一度: once more, one more time; 手: hand; 取り合う: to take each other’s hands, to mutually grasp"
+      "vocab": "手を取り合い: join hands, take each other’s hands; もう一度: once more, one more time; 手: hand; 取り合う: to take each other’s hands, to mutually grasp",
+      "japaneseVocab": "手を取り合い: おたがいの手を取り、支え合ったり協力し合ったりすること。; もう一度: かつて行ったことを再度行うさま。; 手: ものを持つ、ふれるなどの動作を行うからだの部分。; 取り合う: 互いに取りあって一つのまとまりになること。"
     },
     {
       "kanji": "共に願いを叶えよう",
@@ -98,7 +109,8 @@
       "romaji": "Tomoni negai o kanaeyou",
       "english": "Let’s make our wishes come true together",
       "time": 83.76671406866456,
-      "vocab": "共に: together; 願いを: (our) wish, desire (as object); 叶えよう: let’s make it come true; 願い: wish, desire"
+      "vocab": "共に: together; 願いを: (our) wish, desire (as object); 叶えよう: let’s make it come true; 願い: wish, desire",
+      "japaneseVocab": "共に: 同じ目的を持っていっしょに行動するさま。; 願いを: 心の中で強く求めていることを対象として。; 叶えよう: 望みどおりの状態に実現させようという意志を示す「叶える」の意向形。; 願い: 実現してほしいと望んでいること。"
     },
     {
       "kanji": "孤独に耐えた日々も 誰かのための一歩",
@@ -106,7 +118,8 @@
       "romaji": "Kodoku ni taeta hibi mo dareka no tame no ippo",
       "english": "Even the lonely days we endured were steps for someone else",
       "time": 87.50190912969971,
-      "vocab": "孤独に耐えた日々も: the days of enduring loneliness, those lonely days too; 誰かのための一歩: a step for someone; 孤独: loneliness, solitude; 耐えた: endured, withstood; 日々: days, day after day; 誰か: someone; のため: for the sake of; 一歩: one step"
+      "vocab": "孤独に耐えた日々も: the days of enduring loneliness, those lonely days too; 誰かのための一歩: a step for someone; 孤独: loneliness, solitude; 耐えた: endured, withstood; 日々: days, day after day; 誰か: someone; のため: for the sake of; 一歩: one step",
+      "japaneseVocab": "孤独に耐えた日々も: ひとりきりのさびしさにじっとこらえて過ごしてきた毎日もまた。; 誰かのための一歩: まだ見ぬ誰かを思って踏み出す小さな前進。; 孤独: 人とのつながりが薄く、ひとりでいると感じる状態。; 耐えた: つらさや苦しさに負けず、がまんして持ちこたえたこと。; 日々: 一日一日が積み重なっていくこと。; 誰か: 特定されていないある人。; のため: その人や目的に利益があるようにという意味を表す言い方。; 一歩: 足を一回前に出す距離から転じて、小さな前進・進歩。"
     },
     {
       "kanji": "あの日の笑顔に会いに行こう",
@@ -114,7 +127,8 @@
       "romaji": "Ano hi no egao ni ai ni ikou",
       "english": "Let’s go meet those smiles from that day",
       "time": 90.94595214877319,
-      "vocab": "あの日の笑顔に: to those smiles from that day; 会いに行こう: let’s go to meet; あの日: that day (in the past); 笑顔: smiling face, smile; 会う: to meet; 行く: to go"
+      "vocab": "あの日の笑顔に: to those smiles from that day; 会いに行こう: let’s go to meet; あの日: that day (in the past); 笑顔: smiling face, smile; 会う: to meet; 行く: to go",
+      "japaneseVocab": "あの日の笑顔に: 過去のある日、自分の心に残っているそのときの笑顔のもとへ。; 会いに行こう: その人に会うことを目的として出かけようという呼びかけ。; あの日: 話し手が特別な意味を感じている過去のある一日。; 笑顔: 口もとや目元がほころび、うれしさややさしさが表れた表情。; 会う: 人と顔を合わせること。; 行く: いまいる場所から別の場所へ移動すること。"
     },
     {
       "kanji": "ねえ 知ってるよ 先が見えていないこと",
@@ -122,7 +136,8 @@
       "romaji": "Nee shitteru yo saki ga mieteinai koto",
       "english": "Hey, I know we can’t see what lies ahead",
       "time": 109.17977203242492,
-      "vocab": "ねえ: hey; 知ってるよ: I know (casual, emphatic); 先が見えていないこと: the fact that we can’t see what lies ahead; 先: ahead, future; 見えていない: not visible, can’t be seen; こと: the fact that, situation"
+      "vocab": "ねえ: hey; 知ってるよ: I know (casual, emphatic); 先が見えていないこと: the fact that we can’t see what lies ahead; 先: ahead, future; 見えていない: not visible, can’t be seen; こと: the fact that, situation",
+      "japaneseVocab": "ねえ: 親しい相手に呼びかけるときの一言。; 知ってるよ: その事実をすでに理解していると強めに伝えるくだけた表現。; 先が見えていないこと: この先どうなるのかはっきりわからないという状況そのもの。; 先: これから向かっていく時間や場所。; 見えていない: 目で確認できず、はっきりと把握できていない様子。; こと: 事柄や状態全体をまとめて指す名詞化のことば。"
     },
     {
       "kanji": "ねえ 知ってるよ 元には戻らないこと",
@@ -130,7 +145,8 @@
       "romaji": "Nee shitteru yo moto ni wa modoranai koto",
       "english": "Hey, I know we can’t go back to how it was",
       "time": 116.14610789700318,
-      "vocab": "ねえ: hey; 知ってるよ: I know; 元には戻らないこと: the fact that it can’t return to how it was; 元: original state, former state; 戻らない: does not return, will not go back; こと: the fact that, situation"
+      "vocab": "ねえ: hey; 知ってるよ: I know; 元には戻らないこと: the fact that it can’t return to how it was; 元: original state, former state; 戻らない: does not return, will not go back; こと: the fact that, situation",
+      "japaneseVocab": "ねえ: 聞き手の注意を引きつけるためのくだけた呼びかけ。; 知ってるよ: その状況を承知しているという気持ちを強く示す言い方。; 元には戻らないこと: 一度変わってしまったものが、以前とまったく同じ状態にはならないという事実。; 元: 変化する前のもとの状態。; 戻らない: 再びその場所や状態にかえらないこと。; こと: 事実や状況を一つのまとまりとして指す名詞。"
     },
     {
       "kanji": "あとどれくらい続けられるだろう？",
@@ -138,7 +154,8 @@
       "romaji": "Ato dore kurai tsuzukerareru darou?",
       "english": "I wonder how much longer we can keep going",
       "time": 123.223042,
-      "vocab": "あとどれくらい: how much longer, how much more; 続けられる: be able to continue; だろう: I wonder, probably"
+      "vocab": "あとどれくらい: how much longer, how much more; 続けられる: be able to continue; だろう: I wonder, probably",
+      "japaneseVocab": "あとどれくらい: 今の状態を続ける時間や回数が、さらにどの程度必要なのかをたずねる表現。; 続けられる: 中断せずにそのまま続行することができるという意味。; だろう: 話し手の推測や自問自答の気持ちを表す表現。"
     },
     {
       "kanji": "声のない心の叫びを",
@@ -146,7 +163,8 @@
       "romaji": "Koe no nai kokoro no sakebi o",
       "english": "The voiceless cries of our hearts",
       "time": 127.1005790114441,
-      "vocab": "声のない心の叫びを: the voiceless cries of the heart; 声のない: voiceless, without a voice; 心の: of the heart; 叫びを: cries, shouts (as object); 声: voice; 心: heart, feelings; 叫び: cry, shout, scream"
+      "vocab": "声のない心の叫びを: the voiceless cries of the heart; 声のない: voiceless, without a voice; 心の: of the heart; 叫びを: cries, shouts (as object); 声: voice; 心: heart, feelings; 叫び: cry, shout, scream",
+      "japaneseVocab": "声のない心の叫びを: 実際には声に出ていないが、心の中で強く叫んでいる思いを対象として。; 声のない: 音としては聞こえないが、感情が確かに存在している様子。; 心の: 感情や思考をつかさどる内面に属するという意味。; 叫びを: 強い感情がこみ上げて思わず発せられる声・思いを対象として。; 声: 人がのどを使って出す音。; 心: 人の感情や意志、考えなどの内面。; 叫び: 激しい感情の表れとしての大きな声や心のうめき。"
     },
     {
       "kanji": "ごめん 辛いが 浮かばれないでしょ",
@@ -154,7 +172,8 @@
       "romaji": "Gomen tsurai ga ukabarenai desho",
       "english": "Sorry, it’s painful — it feels like we can’t rise above",
       "time": 130.78300610108948,
-      "vocab": "ごめん: sorry; 辛いが: it’s painful, but…; 浮かばれないでしょ: feels like we can’t be saved / can’t be lifted, right?; 浮かばれない: cannot be saved, cannot rest in peace, can’t be lifted; でしょ: right?, I guess (seeking agreement)"
+      "vocab": "ごめん: sorry; 辛いが: it’s painful, but…; 浮かばれないでしょ: feels like we can’t be saved / can’t be lifted, right?; 浮かばれない: cannot be saved, cannot rest in peace, can’t be lifted; でしょ: right?, I guess (seeking agreement)",
+      "japaneseVocab": "ごめん: 相手に対して悪かったとあやまるときのくだけた表現。; 辛いが: 苦しいけれども、という逆接のつなぎ方。; 浮かばれないでしょ: 報われず、心が救われないままのように感じるよね、というニュアンス。; 浮かばれない: 心残りが多く、安らかな状態になれないこと。; でしょ: 相手の同意や確認を求める終助詞。"
     },
     {
       "kanji": "諦めてしまえば そこで終わりなの",
@@ -162,7 +181,8 @@
       "romaji": "Akirameteshimaeba sokode owari na no",
       "english": "If we give up, that’s where it ends",
       "time": 134.5802780667572,
-      "vocab": "諦めてしまえば: if you completely give up; そこで終わりなの: it ends right there, that’s the end; 諦める: to give up; 終わり: end"
+      "vocab": "諦めてしまえば: if you completely give up; そこで終わりなの: it ends right there, that’s the end; 諦める: to give up; 終わり: end",
+      "japaneseVocab": "諦めてしまえば: 望みを捨てて完全にやめてしまうならば、という条件。; そこで終わりなの: その時点で物事が完結してしまい、それ以上先がなくなるということ。; 諦める: もうかなわないと判断して、期待や努力をやめること。; 終わり: 続いていたものが区切りを迎えて、先がなくなる状態。"
     },
     {
       "kanji": "手を取り合い もう一度",
@@ -170,7 +190,8 @@
       "romaji": "Te o toriai mōichido",
       "english": "Let’s hold hands once more",
       "time": 139.7387229485016,
-      "vocab": "手を取り合い: join hands, take each other’s hands; もう一度: once more, again; 手: hand; 取り合う: to take each other’s hands, to mutually grasp"
+      "vocab": "手を取り合い: join hands, take each other’s hands; もう一度: once more, again; 手: hand; 取り合う: to take each other’s hands, to mutually grasp",
+      "japaneseVocab": "手を取り合い: 手をつなぎ合って、協力して進もうとする様子。; もう一度: すでにしたことを、再び行うこと。; 手: ものを持ったり触れたりするからだの部分。; 取り合う: 互いに取り合って結びつく、または奪い合うこと。"
     },
     {
       "kanji": "共に願いを捧げよう",
@@ -178,7 +199,8 @@
       "romaji": "Tomo ni negai o sasageyou",
       "english": "Let’s offer up our wishes together",
       "time": 143.62160290844727,
-      "vocab": "共に: together; 願いを捧げよう: let’s offer up our wishes; 願い: wish, prayer; 捧げよう: let’s offer, dedicate"
+      "vocab": "共に: together; 願いを捧げよう: let’s offer up our wishes; 願い: wish, prayer; 捧げよう: let’s offer, dedicate",
+      "japaneseVocab": "共に: 同じ目的を持っていっしょに行うさま。; 願いを捧げよう: 自分たちの望みを高いところや何か大きな存在に向けて差し出そう、という呼びかけ。; 願い: かなってほしいと心から望むこと。; 捧げよう: 尊いものとして差し出そうとする気持ちを表す「捧げる」の意向形。"
     },
     {
       "kanji": "失われた命 この祈りよ 永遠に",
@@ -186,7 +208,8 @@
       "romaji": "Ushinawareta inochi kono inori yo eien ni",
       "english": "Lost lives, may these prayers last forever",
       "time": 147.32960489318847,
-      "vocab": "失われた命: lost lives; この祈りよ: oh, this prayer; 永遠に: forever, eternally; 失われた: lost; 命: life; 祈り: prayer; よ: sentence-ending particle calling out, emphasizing"
+      "vocab": "失われた命: lost lives; この祈りよ: oh, this prayer; 永遠に: forever, eternally; 失われた: lost; 命: life; 祈り: prayer; よ: sentence-ending particle calling out, emphasizing",
+      "japaneseVocab": "失われた命: もう二度と戻ってこない、人のいのち。; この祈りよ: 今ささげているこの祈りよ、と呼びかける表現。; 永遠に: 途切れることなく、ずっと続くさま。; 失われた: なくなってしまった、取り戻せない状態になったこと。; 命: 生きているという状態、またはその一人の生そのもの。; 祈り: 願いや感謝の気持ちを、言葉や心の中でささげること。; よ: 強く呼びかけたり、感情をこめて言い切ったりするときに使う終助詞。"
     },
     {
       "kanji": "忘れずに刻むから",
@@ -194,7 +217,8 @@
       "romaji": "Wasurezu ni kizamu kara",
       "english": "We’ll engrave them in our hearts forever",
       "time": 150.99235085694886,
-      "vocab": "忘れずに: without forgetting; 刻むから: because we will engrave / carve it in; 刻む: carve, engrave, etch (also “to mark” in time/memory); から: because"
+      "vocab": "忘れずに: without forgetting; 刻むから: because we will engrave / carve it in; 刻む: carve, engrave, etch (also “to mark” in time/memory); から: because",
+      "japaneseVocab": "忘れずに: 記憶や思いを消さないように保ったままで。; 刻むから: 深く心に刻みつけておくつもりだから、という理由を示す言い方。; 刻む: かたいものに線や文字を彫って残すことから、時間や思い出を深く残すことを表す。; から: 前に述べた内容が理由・原因であることを示す接続助詞。"
     },
     {
       "kanji": "手を取り合い もう一度",
@@ -202,7 +226,8 @@
       "romaji": "Te o toriai mōichido",
       "english": "Let’s hold hands once more",
       "time": 154.4167419141693,
-      "vocab": "手を取り合い: join hands, take each other’s hands; もう一度: once more, again; 手: hand; 取り合う: to take each other’s hands, to mutually grasp"
+      "vocab": "手を取り合い: join hands, take each other’s hands; もう一度: once more, again; 手: hand; 取り合う: to take each other’s hands, to mutually grasp",
+      "japaneseVocab": "手を取り合い: 互いに手を取り合って支えになろうとする様子。; もう一度: 以前と同じことを、再度行うこと。; 手: 物をにぎったり触ったりするための器官。; 取り合う: 手や物などを互いに取って結びつく、あるいは奪い合うこと。"
     },
     {
       "kanji": "僕は誓いを歌うよ",
@@ -210,7 +235,8 @@
       "romaji": "Boku wa chikai o utau yo",
       "english": "I’ll sing my vow",
       "time": 158.1549959256134,
-      "vocab": "僕は: as for me (I); 誓いを歌うよ: I’ll sing my vow; 僕: I, me (casual male); 誓い: vow, pledge; 歌う: sing; よ: sentence-ending particle adding emphasis"
+      "vocab": "僕は: as for me (I); 誓いを歌うよ: I’ll sing my vow; 僕: I, me (casual male); 誓い: vow, pledge; 歌う: sing; よ: sentence-ending particle adding emphasis",
+      "japaneseVocab": "僕は: 話し手である自分をやわらかく指し示す言い方。; 誓いを歌うよ: 自分の決意や約束を歌という形で表現するよ、という意思表示。; 僕: 主に男性が使う、くだけた一人称。; 誓い: こうすると心に決めた約束や決意。; 歌う: メロディにのせて声を出すこと。; よ: 自分の思いや主張を強めて述べるときの終助詞。"
     },
     {
       "kanji": "次の世代の誰か 僕らの子供たちが",
@@ -218,7 +244,8 @@
       "romaji": "Tsugi no sedai no dareka bokura no kodomotachi ga",
       "english": "So that someone of the next generation — our children —",
       "time": 161.76127897711183,
-      "vocab": "次の世代の誰か: someone of the next generation; 僕らの子供たちが: our children (as the ones who…); 次の世代: the next generation; 誰か: someone; 僕ら: we, us; 子供たち: children"
+      "vocab": "次の世代の誰か: someone of the next generation; 僕らの子供たちが: our children (as the ones who…); 次の世代: the next generation; 誰か: someone; 僕ら: we, us; 子供たち: children",
+      "japaneseVocab": "次の世代の誰か: 今よりも後の時代に生きる人々のうちの、ある一人。; 僕らの子供たちが: 自分たちに続く世代の子どもたちが、という主語。; 次の世代: 現在の人々の子や孫など、次に社会を担う人たち。; 誰か: 特定されていない一人の人。; 僕ら: 話し手を含む仲間たちを指すくだけた一人称複数。; 子供たち: まだ大人になっていない人々をやわらかく指すことば。"
     },
     {
       "kanji": "迷わず歩いて行けるように",
@@ -226,7 +253,8 @@
       "romaji": "Mayowazu aruite ikeru yōni",
       "english": "Can walk forward without hesitation",
       "time": 165.55200298092652,
-      "vocab": "迷わず: without hesitating; 歩いて行けるように: so that (they) can keep walking on; 歩いて行ける: be able to walk on, able to keep walking; ように: so that, in such a way that (wish/purpose)"
+      "vocab": "迷わず: without hesitating; 歩いて行けるように: so that (they) can keep walking on; 歩いて行ける: be able to walk on, able to keep walking; ように: so that, in such a way that (wish/purpose)",
+      "japaneseVocab": "迷わず: ためらったり不安になったりせずに。; 歩いて行けるように: 自分の足で前へ進み続けることができる状態になることを願って。; 歩いて行ける: 自分の足で先へ先へと進んでいくことが可能であること。; ように: 〜となることを願ったり、目的や結果の形を示したりする表現。"
     },
     {
       "kanji": "手を取り合いを もう一度",
@@ -234,7 +262,8 @@
       "romaji": "Te o toriai o mōichido",
       "english": "Let’s hold hands once more",
       "time": 183.7704719923706,
-      "vocab": "手を取り合いを: (to) join hands, take each other’s hands (song rhythm); もう一度: once more, one more time; 手を取り合う: join hands, support each other; 手: hand"
+      "vocab": "手を取り合いを: (to) join hands, take each other’s hands (song rhythm); もう一度: once more, one more time; 手を取り合う: join hands, support each other; 手: hand",
+      "japaneseVocab": "手を取り合いを: 歌のリズムに合わせた言い回しで、互いに手を取り合うことを表す。; もう一度: 以前と同じことを再度行うこと。; 手を取り合う: 手をつなぎ合って支え合う、協力し合うこと。; 手: ものに触れたり、相手と手をつないだりするためのからだの部分。"
     },
     {
       "kanji": "枯れた世界を繋げよう",
@@ -242,7 +271,8 @@
       "romaji": "Kareta sekai o tsunageyou",
       "english": "Let’s connect this withered world again",
       "time": 187.2788601411438,
-      "vocab": "枯れた世界を: the withered world (as object); 繋げよう: let’s connect, let’s link; 枯れた世界: withered world; 枯れた: withered, dried up; 世界: world"
+      "vocab": "枯れた世界を: the withered world (as object); 繋げよう: let’s connect, let’s link; 枯れた世界: withered world; 枯れた: withered, dried up; 世界: world",
+      "japaneseVocab": "枯れた世界を: 活気やうるおいを失ってしまった世界を対象として。; 繋げよう: ばらばらになったものをもう一度つなぎ合わせようという呼びかけ。; 枯れた世界: 希望や生命力が弱くなってしまった世界のイメージ。; 枯れた: 水分や勢いを失い、しおれてしまった状態。; 世界: 人々が生きている社会や地球全体を指すことば。"
     },
     {
       "kanji": "壊れないように 無くさないように",
@@ -250,7 +280,8 @@
       "romaji": "Kowarenai yōni nakusanai yōni",
       "english": "So it won’t break, so it won’t be lost",
       "time": 190.91382708392334,
-      "vocab": "壊れないように: so that it won’t break; 無くさないように: so that it won’t be lost; 壊れない: does not break, won’t break; 無くさない: do not lose"
+      "vocab": "壊れないように: so that it won’t break; 無くさないように: so that it won’t be lost; 壊れない: does not break, won’t break; 無くさない: do not lose",
+      "japaneseVocab": "壊れないように: こわれてしまわないように気をつけるさま。; 無くさないように: 失ってしまわないように守ることを願う言い方。; 壊れない: 物がこわれた状態にならないこと。; 無くさない: 物や大事なものを手放したり見失ったりしないで保つこと。"
     },
     {
       "kanji": "抱きしめて進むから",
@@ -258,7 +289,8 @@
       "romaji": "Dakishimete sumu kara",
       "english": "We’ll hold on tight and move forward",
       "time": 194.5805489732971,
-      "vocab": "抱きしめて: hold tight, embrace; 進むから: because we move forward / will go on; 進む: move forward, go on; から: because"
+      "vocab": "抱きしめて: hold tight, embrace; 進むから: because we move forward / will go on; 進む: move forward, go on; から: because",
+      "japaneseVocab": "抱きしめて: ぎゅっと抱き寄せて、離さないようにするさま。; 進むから: 私たちは前へ進んでいくつもりだから、という理由を表す。; 進む: 前のほうへ向かって動いたり、状況を先へ進行させたりすること。; から: 前の文が理由・原因であることを示す接続助詞。"
     },
     {
       "kanji": "手を取り合い もう一度",
@@ -266,7 +298,8 @@
       "romaji": "Te o toriai mōichido",
       "english": "Let’s hold hands once more",
       "time": 198.26401298855592,
-      "vocab": "手を取り合い: join hands, take each other’s hands; もう一度: once more, again; 手: hand; 取り合う: to take each other’s hands, to mutually grasp"
+      "vocab": "手を取り合い: join hands, take each other’s hands; もう一度: once more, again; 手: hand; 取り合う: to take each other’s hands, to mutually grasp",
+      "japaneseVocab": "手を取り合い: 互いの手を取りあって連帯すること。; もう一度: 再び、もう一回。; 手: 相手と触れ合ったり、支えたりできるからだの部分。; 取り合う: 互いに取りあい、つながりを持つ様子。"
     },
     {
       "kanji": "僕ら何度も歌うよ",
@@ -274,7 +307,8 @@
       "romaji": "Bokura nan do mo utau yo",
       "english": "We’ll sing it over and over again",
       "time": 201.76239117738342,
-      "vocab": "僕ら: we, us; 何度も歌うよ: we’ll sing many times, over and over; 何度も: many times, repeatedly; 歌う: sing; よ: sentence-ending particle adding emphasis"
+      "vocab": "僕ら: we, us; 何度も歌うよ: we’ll sing many times, over and over; 何度も: many times, repeatedly; 歌う: sing; よ: sentence-ending particle adding emphasis",
+      "japaneseVocab": "僕ら: 話し手を含む仲間たちをくだけて表す一人称複数。; 何度も歌うよ: 繰り返し何回もその歌を口にするつもりだという表現。; 何度も: 同じことをくり返して行うさま。; 歌う: 曲に合わせて声を出すこと。; よ: 話し手の気持ちや決意を強く伝えるための終助詞。"
     },
     {
       "kanji": "世界中のどこか 歌を聴いた君が",
@@ -282,7 +316,8 @@
       "romaji": "Sekaijū no doko ka uta o kiita kimi ga",
       "english": "Somewhere in the world, when you hear this song",
       "time": 205.5688759370575,
-      "vocab": "世界中のどこか: somewhere in the world; 歌を聴いた君が: you who heard the song; 世界中: all over the world; どこか: somewhere; 歌を聴いた: heard the song; 歌: song; 聴いた: heard, listened; 君: you (dear)"
+      "vocab": "世界中のどこか: somewhere in the world; 歌を聴いた君が: you who heard the song; 世界中: all over the world; どこか: somewhere; 歌を聴いた: heard the song; 歌: song; 聴いた: heard, listened; 君: you (dear)",
+      "japaneseVocab": "世界中のどこか: 地球上のどこか一つの場所。; 歌を聴いた君が: この歌を耳にしたあなたが、という主語。; 世界中: 世界のあらゆる場所。; どこか: はっきりとは特定しない、ある場所。; 歌を聴いた: 歌を耳で受けとめたこと。; 歌: メロディと歌詞がある楽曲。; 聴いた: 注意して音を聞いたこと。; 君: 親しい相手を指す二人称。"
     },
     {
       "kanji": "笑ってくれるように もう一度 もう一度",
@@ -290,7 +325,8 @@
       "romaji": "Warattekureru yōni mōichido mōichido",
       "english": "May you smile again, once more, once more",
       "time": 208.92164003242493,
-      "vocab": "笑ってくれるように: so that you’ll smile for us; もう一度: once more, again (repeated); 笑ってくれる: (you) smile for (me/us); ように: so that, in such a way that (wish/prayer)"
+      "vocab": "笑ってくれるように: so that you’ll smile for us; もう一度: once more, again (repeated); 笑ってくれる: (you) smile for (me/us); ように: so that, in such a way that (wish/prayer)",
+      "japaneseVocab": "笑ってくれるように: あなたがもう一度笑顔になってくれることを願って。; もう一度: 再び、もう一回。; 笑ってくれる: 相手が自分のために笑顔を向けてくれること。; ように: 〜となることを祈ったり、望ましい状態を示したりする表現。"
     },
     {
       "kanji": "手を取り合いを もう一度",
@@ -298,7 +334,8 @@
       "romaji": "Te o toriai o mōichido",
       "english": "Let’s hold hands once more",
       "time": 218.44188405722045,
-      "vocab": "手を取り合いを: (to) join hands, take each other’s hands (song rhythm); もう一度: once more, one more time; 手を取り合う: join hands, support each other; 手: hand"
+      "vocab": "手を取り合いを: (to) join hands, take each other’s hands (song rhythm); もう一度: once more, one more time; 手を取り合う: join hands, support each other; 手: hand",
+      "japaneseVocab": "手を取り合いを: 歌のリズムに合わせ、「手を取り合う」ことを強調した言い方。; もう一度: もう一回、再び。; 手を取り合う: 互いの手をとって支え合い、協力し合うこと。; 手: 相手とつながることもできるからだの部分。"
     },
     {
       "kanji": "共に夜明けを迎えよう",
@@ -306,7 +343,8 @@
       "romaji": "Tomoni yoake o mukaeyou",
       "english": "Let’s greet the dawn together",
       "time": 221.7249709961853,
-      "vocab": "共に: together; 夜明けを迎えよう: let’s greet the dawn; 夜明け: dawn, daybreak; 迎えよう: let’s welcome, greet"
+      "vocab": "共に: together; 夜明けを迎えよう: let’s greet the dawn; 夜明け: dawn, daybreak; 迎えよう: let’s welcome, greet",
+      "japaneseVocab": "共に: いっしょに、同じ方向を向いて。; 夜明けを迎えよう: 新しい一日の始まりをともに受け入れようという呼びかけ。; 夜明け: 夜が明けて空が明るくなり始める時。; 迎えよう: こちらから受けとめに行こうとする意志を表す「迎える」の意向形。"
     },
     {
       "kanji": "終わりのない不安も 戻りはしない時間も",
@@ -314,7 +352,8 @@
       "romaji": "Owari no nai fuan mo modori wa shinai jikan mo",
       "english": "Even endless fears and lost time",
       "time": 225.45765090081787,
-      "vocab": "終わりのない不安も: even these endless anxieties; 戻りはしない時間も: time that will never return as well; 終わりのない: endless; 不安: anxiety, fear; 戻りはしない: will not return; 時間: time"
+      "vocab": "終わりのない不安も: even these endless anxieties; 戻りはしない時間も: time that will never return as well; 終わりのない: endless; 不安: anxiety, fear; 戻りはしない: will not return; 時間: time",
+      "japaneseVocab": "終わりのない不安も: いつまで続くかわからない心配な気持ちもまた。; 戻りはしない時間も: もう二度と同じ形では戻ってこない時間も一緒に。; 終わりのない: 終点が見えず続いている様子。; 不安: 将来や状況について心が落ち着かない状態。; 戻りはしない: 元の場所・状態に戻ることは決してないという強い言い方。; 時間: 過去から未来へと連続して流れていくもの。"
     },
     {
       "kanji": "抱きしめて進むから",
@@ -322,7 +361,8 @@
       "romaji": "Dakishimete sumu kara",
       "english": "We’ll embrace them and move forward",
       "time": 229.16310499046327,
-      "vocab": "抱きしめて: holding tight, embracing; 進むから: because we move forward / will go on; 進む: move forward, go on; から: because"
+      "vocab": "抱きしめて: holding tight, embracing; 進むから: because we move forward / will go on; 進む: move forward, go on; から: because",
+      "japaneseVocab": "抱きしめて: しっかりと抱きしめ、大切に抱きかかえたままで。; 進むから: 私たちは前へ進んでいくつもりだから、という理由を示す表現。; 進む: 前方へ動く、あるいは物事を先へ進行させること。; から: 前に述べた事柄を理由として示す接続助詞。"
     },
     {
       "kanji": "手を取り合いを もう一度",
@@ -330,7 +370,8 @@
       "romaji": "Te o toriai o mōichido",
       "english": "Let’s hold hands once more",
       "time": 232.74140785313415,
-      "vocab": "手を取り合いを: (to) join hands, take each other’s hands (song rhythm); もう一度: once more, again; 手を取り合う: join hands, support each other; 手: hand"
+      "vocab": "手を取り合いを: (to) join hands, take each other’s hands (song rhythm); もう一度: once more, again; 手を取り合う: join hands, support each other; 手: hand",
+      "japaneseVocab": "手を取り合いを: リズムに合わせた表現で、「手を取り合う」ことを強く示す。; もう一度: 再度、同じことを行うこと。; 手を取り合う: 互いの手をつかみ合って支え合うこと。; 手: 他者や世界と直接ふれ合うための器官。"
     },
     {
       "kanji": "共に願いを叶えよう",
@@ -338,7 +379,8 @@
       "romaji": "Tomoni negai o kanaeyou",
       "english": "Let’s make our wishes come true together",
       "time": 236.40815888746644,
-      "vocab": "共に: together; 願いを叶えよう: let’s make our wishes come true; 願い: wish, desire; 叶えよう: let’s make (them) come true"
+      "vocab": "共に: together; 願いを叶えよう: let’s make our wishes come true; 願い: wish, desire; 叶えよう: let’s make (them) come true",
+      "japaneseVocab": "共に: 一緒になって、同じ目標に向かうさま。; 願いを叶えよう: 自分たちの望みを現実のものにしようという呼びかけ。; 願い: 実現を強く望む心の中の思い。; 叶えよう: 望みどおりに実現させようとする意志を表す「叶える」の意向形。"
     },
     {
       "kanji": "孤独に耐えた日々も 誰かのための一歩",
@@ -346,7 +388,8 @@
       "romaji": "Kodoku ni taeta hibi mo dareka no tame no ippo",
       "english": "Even the lonely days we endured were steps for someone else",
       "time": 239.98216909155275,
-      "vocab": "孤独に耐えた日々も: even the days we endured loneliness; 誰かのための一歩: a step for someone; 孤独: loneliness, solitude; 耐えた: endured, withstood; 日々: days, day after day; 誰か: someone; のため: for the sake of; 一歩: one step"
+      "vocab": "孤独に耐えた日々も: even the days we endured loneliness; 誰かのための一歩: a step for someone; 孤独: loneliness, solitude; 耐えた: endured, withstood; 日々: days, day after day; 誰か: someone; のため: for the sake of; 一歩: one step",
+      "japaneseVocab": "孤独に耐えた日々も: ひとりでいるさびしさにがまんしながら過ごしてきた毎日もまた。; 誰かのための一歩: まだ知らない誰かの幸せや未来のために踏み出す小さな前進。; 孤独: 人とのつながりが薄く、ひとりでいると感じる状態。; 耐えた: つらさや困難に負けず、こらえ続けたこと。; 日々: 日ごとの積み重なりとしての毎日。; 誰か: 特定されていない一人の人。; のため: その人や目的に役立つように、という意味を示す表現。; 一歩: ほんの少しの前進や進展をたとえて言うことば。"
     },
     {
       "kanji": "僕らの明日を迎えに行こう",
@@ -354,7 +397,8 @@
       "romaji": "Bokura no ashita o mukae ni ikou",
       "english": "Let’s go and greet our tomorrow",
       "time": 243.4904189294281,
-      "vocab": "僕らの明日を: our tomorrow (as object); 迎えに行こう: let’s go to meet, go welcome; 僕ら: we, us; 明日: tomorrow; 迎えに行く: go to meet, go to pick up"
+      "vocab": "僕らの明日を: our tomorrow (as object); 迎えに行こう: let’s go to meet, go welcome; 僕ら: we, us; 明日: tomorrow; 迎えに行く: go to meet, go to pick up",
+      "japaneseVocab": "僕らの明日を: 僕たち自身が生きていくこれからの未来の一日を対象として。; 迎えに行こう: その時や人のところへ自ら出向いて受けとめようという呼びかけ。; 僕ら: 話し手を含む仲間たちをくだけて言う一人称複数。; 明日: 今日の次の日。これからやって来る近い未来。; 迎えに行く: 相手や時を出迎えるために、こちらから出向いていくこと。"
     }
   ]
 }
