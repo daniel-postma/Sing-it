@@ -1,5 +1,5 @@
 <!-- =========================
-     index.html
+     index.html  (UPDATED)
 ========================= -->
 <!DOCTYPE html>
 <html lang="en">
@@ -13,8 +13,17 @@
     <h1>🎵 Fluency Flow Sing-Along</h1>
 
     <div id="container">
-      <div id="player"></div>
+      <!-- YOUTUBE PLAYER + VOCAB PANEL -->
+      <div id="playerColumn">
+        <div id="player"></div>
 
+        <!-- 🔥 NEW VOCAB PANEL HERE -->
+        <div id="vocabPanel">
+          <!-- dynamically filled -->
+        </div>
+      </div>
+
+      <!-- LYRICS AREA -->
       <div id="lyricsPanel">
         <div id="controls">
           <div class="lang-toggle">
@@ -40,7 +49,7 @@
     <div
       id="songNav"
       style="
-        margin-top: 40px; /* moved lower */
+        margin-top: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -51,216 +60,22 @@
       <button id="nextSong" class="song-arrow">⟩</button>
     </div>
 
-    <!-- YouTube Iframe API -->
+    <!-- YouTube API -->
     <script>
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
       document.head.appendChild(tag);
     </script>
 
+    <script src="script.js"></script>
+    <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
     <script>
-      // =========================
-      // script.js
-      // =========================
-
-      let player;
-      let highlightIndex = -1;
-
-      // List of song JSONs we can loop through
-      const songs = [
-        { file: "mou_ichido.json", fallbackId: "uP8CtPMAd5Q" },
-        { file: "uchiage_hanabi.json", fallbackId: "-tKVN2mAKRI" },
-        // add more here: { file: "another_song.json", fallbackId: "XXXXXXXXXXX" }
-      ];
-
-      let currentSongIndex = 0;
-      let currentSong = null;
-      let lyrics = [];
-
-      const lyricsContainer = document.getElementById("lyrics");
-      const showKanji = document.getElementById("showKanji");
-      const showKana = document.getElementById("showKana");
-      const showRomaji = document.getElementById("showRomaji");
-      const showEnglish = document.getElementById("showEnglish");
-      const showVocab = document.getElementById("showVocab");
-
-      const prevSongBtn = document.getElementById("prevSong");
-      const nextSongBtn = document.getElementById("nextSong");
-      const songLabel = document.getElementById("songLabel");
-
-      function extractVideoId(urlOrId) {
-        if (!urlOrId) return "";
-        const match = urlOrId.match(
-          /(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/
-        );
-        return match ? match[1] : urlOrId;
-      }
-
-      // Called by YouTube Iframe API
-      function onYouTubeIframeAPIReady() {
-        const fallbackId = songs[currentSongIndex]?.fallbackId || "uP8CtPMAd5Q";
-        const id = extractVideoId(
-          (currentSong && (currentSong.videoUrl || currentSong.videoId)) ||
-            fallbackId
-        );
-        player = new YT.Player("player", {
-          height: "360",
-          width: "640",
-          videoId: id,
-          playerVars: { autoplay: 0 },
-        });
-      }
-      window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
-
-      // Load a song JSON by index
-      async function loadSong(index) {
-        if (index < 0 || index >= songs.length) return;
-        currentSongIndex = index;
-        updateNavButtons();
-
-        try {
-          const res = await fetch(songs[index].file);
-          const json = await res.json();
-          currentSong = json;
-          lyrics = json.lyrics || [];
-
-          const id = extractVideoId(
-            json.videoUrl || json.videoId || songs[index].fallbackId
-          );
-          if (player && typeof player.loadVideoById === "function") {
-            player.loadVideoById(id);
-          }
-
-          renderLyrics();
-        } catch (err) {
-          console.error("❌ Failed to load song JSON:", err);
-        }
-      }
-
-      function updateNavButtons() {
-        if (!prevSongBtn || !nextSongBtn || !songLabel) return;
-
-        const atFirst = currentSongIndex === 0;
-        const atLast = currentSongIndex === songs.length - 1;
-
-        prevSongBtn.disabled = atFirst;
-        nextSongBtn.disabled = atLast;
-
-        prevSongBtn.style.opacity = atFirst ? "0.3" : "1";
-        nextSongBtn.style.opacity = atLast ? "0.3" : "1";
-
-        if (currentSong) {
-          songLabel.textContent = `${currentSong.title || "Untitled"} (${
-            currentSongIndex + 1
-          }/${songs.length})`;
-        } else {
-          songLabel.textContent = `Song ${currentSongIndex + 1} / ${
-            songs.length
-          }`;
-        }
-      }
-
-      function renderLyrics() {
-        lyricsContainer.innerHTML = "";
-        lyrics.forEach((line, i) => {
-          const div = document.createElement("div");
-          div.className = "line";
-
-          const content = [];
-
-          if (showKanji.checked && line.kanji) {
-            content.push(`<div class="kanji-line">${line.kanji}</div>`);
-          }
-          if (showKana.checked && line.kana) {
-            content.push(`<div class="kana-line">${line.kana}</div>`);
-          }
-          if (showRomaji.checked && line.romaji) {
-            content.push(`<div class="romaji-line">${line.romaji}</div>`);
-          }
-          if (showEnglish.checked && line.english) {
-            content.push(`<div class="english-line">${line.english}</div>`);
-          }
-          if (showVocab.checked && line.vocab) {
-            content.push(`<div class="vocab-line">${line.vocab}</div>`);
-          }
-
-          // Fallback if user hides everything
-          if (content.length === 0) {
-            const fallback =
-              line.kanji || line.kana || line.romaji || line.english || "";
-            content.push(`<div class="kanji-line">${fallback}</div>`);
-          }
-
-          div.innerHTML = content.join("");
-          div.onclick = () => handleLineClick(i);
-          lyricsContainer.appendChild(div);
-        });
-
-        if (currentSong?.title && currentSong?.artist) {
-          document.querySelector(
-            "h1"
-          ).textContent = `🎵 ${currentSong.title} - ${currentSong.artist}`;
-        }
-
-        updateNavButtons();
-      }
-
-      function handleLineClick(index) {
-        if (!player || typeof player.seekTo !== "function") return;
-        const line = lyrics[index];
-        if (typeof line.time === "number") {
-          player.seekTo(line.time, true);
-          player.playVideo();
-        }
-      }
-
-      // Re-render when any visibility toggle changes
-      [showKanji, showKana, showRomaji, showEnglish, showVocab].forEach(
-        (cb) => {
-          if (cb) cb.addEventListener("change", renderLyrics);
-        }
-      );
-
-      // Song navigation
-      prevSongBtn.addEventListener("click", () => {
-        if (currentSongIndex > 0) {
-          loadSong(currentSongIndex - 1);
-        }
+      kofiWidgetOverlay.draw("danielgagepostma", {
+        type: "floating-chat",
+        "floating-chat.donateButton.text": "Support me",
+        "floating-chat.donateButton.background-color": "#d9534f",
+        "floating-chat.donateButton.text-color": "#fff",
       });
-
-      nextSongBtn.addEventListener("click", () => {
-        if (currentSongIndex < songs.length - 1) {
-          loadSong(currentSongIndex + 1);
-        }
-      });
-
-      // Auto-highlight current line as video plays
-      setInterval(() => {
-        if (!player || typeof player.getCurrentTime !== "function") return;
-        const time = player.getCurrentTime();
-        let idx = -1;
-
-        for (let i = 0; i < lyrics.length; i++) {
-          if (typeof lyrics[i].time === "number" && lyrics[i].time <= time) {
-            idx = i;
-          }
-        }
-
-        if (idx !== highlightIndex) {
-          highlightIndex = idx;
-          const lines = document.querySelectorAll(".line");
-          lines.forEach((l, i) => l.classList.toggle("highlight", i === idx));
-
-          if (idx >= 0) {
-            const lineEl = lines[idx];
-            const offset = Math.max(0, lineEl.offsetTop - 109);
-            lyricsContainer.scrollTo({ top: offset, behavior: "smooth" });
-          }
-        }
-      }, 200);
-
-      // Kick everything off with the first song
-      loadSong(0);
     </script>
   </body>
 </html>

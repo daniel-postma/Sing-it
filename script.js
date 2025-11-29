@@ -5,6 +5,7 @@ let currentSong;
 let lyrics = [];
 
 const lyricsContainer = document.getElementById("lyrics");
+const vocabPanel = document.getElementById("vocabPanel"); // 🔥 NEW
 
 const showKanji = document.getElementById("showKanji");
 const showKana = document.getElementById("showKana");
@@ -36,8 +37,10 @@ fetch("mou_ichido.json")
   .then((json) => {
     currentSong = json;
     lyrics = json.lyrics;
+
     const id = extractVideoId(json.videoUrl || json.videoId);
     if (player) player.loadVideoById(id);
+
     renderLyrics();
   })
   .catch((err) => console.error("❌ Failed to load default JSON:", err));
@@ -51,7 +54,7 @@ function renderLyrics() {
 
     let content = [];
 
-    // DISPLAY ORDER
+    // ORDER: Kanji → Kana → Romaji → English
     if (showKanji.checked && line.kanji) {
       content.push(`<div class="kanji-line">${line.kanji}</div>`);
     }
@@ -65,24 +68,11 @@ function renderLyrics() {
       content.push(`<div class="english-line">${line.english}</div>`);
     }
 
-    // VOCAB (array or string supported)
-    if (showVocab.checked && line.vocab) {
-      let vocabText = "";
+    // ❗ Do not display vocab here — vocab now lives in separate panel
 
-      if (Array.isArray(line.vocab)) {
-        vocabText = line.vocab.map((v) => `${v.word}: ${v.meaning}`).join("; ");
-      } else {
-        vocabText = String(line.vocab);
-      }
-
-      content.push(`<div class="vocab-line">${vocabText}</div>`);
-    }
-
-    // fallback
+    // Shadow-lyrics mode: show blank line
     if (content.length === 0) {
-      const fallback =
-        line.kanji || line.kana || line.romaji || line.english || "";
-      content.push(`<div class="kanji-line">${fallback}</div>`);
+      content.push(`<div class="blank-line">&nbsp;</div>`);
     }
 
     div.innerHTML = content.join("");
@@ -91,9 +81,11 @@ function renderLyrics() {
     lyricsContainer.appendChild(div);
   });
 
-  document.querySelector(
-    "h1"
-  ).textContent = `🎵 ${currentSong.title} - ${currentSong.artist}`;
+  if (currentSong?.title && currentSong?.artist) {
+    document.querySelector(
+      "h1"
+    ).textContent = `🎵 ${currentSong.title} - ${currentSong.artist}`;
+  }
 }
 
 function handleLineClick(index) {
@@ -105,12 +97,28 @@ function handleLineClick(index) {
   }
 }
 
-// Re-render when toggles change
+/* 🔥 NEW: Show vocab for highlighted line */
+function showVocabForLine(line) {
+  // If vocab toggle is OFF or no vocab exists — clear panel
+  if (!showVocab.checked || !line.vocab) {
+    vocabPanel.innerHTML = "";
+    return;
+  }
+
+  // Split vocab entries: "word:def; word:def..."
+  const parts = line.vocab.split(";").map((v) => v.trim());
+
+  vocabPanel.innerHTML = parts
+    .map((v) => `<div class="vocab-word">${v}</div>`)
+    .join("");
+}
+
+/* Re-render lyrics when toggles change */
 [showKanji, showKana, showRomaji, showEnglish, showVocab].forEach((cb) => {
   if (cb) cb.addEventListener("change", renderLyrics);
 });
 
-// Highlight system
+/* Highlight + scroll + vocab update */
 setInterval(() => {
   if (!player?.getCurrentTime) return;
 
@@ -133,6 +141,11 @@ setInterval(() => {
       const lineEl = lines[idx];
       const offset = Math.max(0, lineEl.offsetTop - 109);
       lyricsContainer.scrollTo({ top: offset, behavior: "smooth" });
+
+      // 🔥 Show vocab under YouTube player
+      showVocabForLine(lyrics[idx]);
+    } else {
+      vocabPanel.innerHTML = "";
     }
   }
 }, 200);
