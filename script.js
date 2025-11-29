@@ -1,11 +1,15 @@
 let player;
 let highlightIndex = -1;
 
-let currentSong;
+let currentSong = null;
 let lyrics = [];
 
+let songList = [];
+let currentSongIndex = 0;
+let pendingVideoId = null;
+
 const lyricsContainer = document.getElementById("lyrics");
-const vocabPanel = document.getElementById("vocabPanel"); // 🔥 NEW
+const vocabPanel = document.getElementById("vocabPanel");
 
 const showKanji = document.getElementById("showKanji");
 const showKana = document.getElementById("showKana");
@@ -13,37 +17,81 @@ const showRomaji = document.getElementById("showRomaji");
 const showEnglish = document.getElementById("showEnglish");
 const showVocab = document.getElementById("showVocab");
 
+const prevSongBtn = document.getElementById("prevSong");
+const nextSongBtn = document.getElementById("nextSong");
+
+const speedSlider = document.getElementById("speedSlider");
+const speedDisplay = document.getElementById("speedDisplay");
+
+/* =============================================
+   YOUTUBE SETUP
+============================================= */
+
 function extractVideoId(urlOrId) {
   if (!urlOrId) return "";
   const match = urlOrId.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
   return match ? match[1] : urlOrId;
 }
 
-function onYouTubeIframeAPIReady() {
-  const id = extractVideoId(
-    currentSong?.videoUrl || currentSong?.videoId || "uP8CtPMAd5Q"
-  );
-  player = new YT.Player("player", {
-    height: "360",
-    width: "640",
-    videoId: id,
-    playerVars: { autoplay: 0 },
-  });
+function initPlayerWithVideo(videoId) {
+  if (!videoId) return;
+
+  if (player && typeof player.loadVideoById === "function") {
+    player.loadVideoById(videoId);
+    return;
+  }
+
+  if (window.YT && window.YT.Player) {
+    player = new YT.Player("player", {
+      height: "360",
+      width: "640",
+      videoId,
+      playerVars: { autoplay: 0 },
+    });
+    pendingVideoId = null;
+    return;
+  }
+
+  pendingVideoId = videoId;
 }
 
-// Load default song
-fetch("mou_ichido.json")
-  .then((response) => response.json())
-  .then((json) => {
-    currentSong = json;
-    lyrics = json.lyrics;
+function onYouTubeIframeAPIReady() {
+  if (pendingVideoId) initPlayerWithVideo(pendingVideoId);
+}
 
-    const id = extractVideoId(json.videoUrl || json.videoId);
-    if (player) player.loadVideoById(id);
+/* =============================================
+   SONG LOADING
+============================================= */
 
-    renderLyrics();
-  })
-  .catch((err) => console.error("❌ Failed to load default JSON:", err));
+function loadSong(index) {
+  if (index < 0 || index >= songList.length) return;
+
+  currentSongIndex = index;
+  const songMeta = songList[index];
+
+  fetch(songMeta.file)
+    .then((res) => res.json())
+    .then((json) => {
+      currentSong = json;
+      lyrics = json.lyrics || [];
+
+      const videoId = extractVideoId(json.videoUrl || json.videoId);
+      initPlayerWithVideo(videoId);
+
+      renderLyrics();
+      updateSongNavButtons();
+    })
+    .catch((e) => console.error("❌ Failed to load song:", e));
+}
+
+function updateSongNavButtons() {
+  prevSongBtn.disabled = currentSongIndex <= 0;
+  nextSongBtn.disabled = currentSongIndex >= songList.length - 1;
+}
+
+/* =============================================
+   LYRICS
+============================================= */
 
 function renderLyrics() {
   lyricsContainer.innerHTML = "";
@@ -52,30 +100,18 @@ function renderLyrics() {
     const div = document.createElement("div");
     div.className = "line";
 
-    let content = [];
+    const parts = [];
 
-    // ORDER: Kanji → Kana → Romaji → English
-    if (showKanji.checked && line.kanji) {
-      content.push(`<div class="kanji-line">${line.kanji}</div>`);
-    }
-    if (showKana.checked && line.kana) {
-      content.push(`<div class="kana-line">${line.kana}</div>`);
-    }
-    if (showRomaji.checked && line.romaji) {
-      content.push(`<div class="romaji-line">${line.romaji}</div>`);
-    }
-    if (showEnglish.checked && line.english) {
-      content.push(`<div class="english-line">${line.english}</div>`);
-    }
+    if (showKanji.checked && line.kanji) parts.push(`<div>${line.kanji}</div>`);
+    if (showKana.checked && line.kana) parts.push(`<div>${line.kana}</div>`);
+    if (showRomaji.checked && line.romaji)
+      parts.push(`<div>${line.romaji}</div>`);
+    if (showEnglish.checked && line.english)
+      parts.push(`<div>${line.english}</div>`);
 
-    // ❗ Do not display vocab here — vocab now lives in separate panel
+    if (parts.length === 0) parts.push(`<div>&nbsp;</div>`);
 
-    // Shadow-lyrics mode: show blank line
-    if (content.length === 0) {
-      content.push(`<div class="blank-line">&nbsp;</div>`);
-    }
-
-    div.innerHTML = content.join("");
+    div.innerHTML = parts.join("");
     div.onclick = () => handleLineClick(i);
 
     lyricsContainer.appendChild(div);
@@ -88,45 +124,91 @@ function renderLyrics() {
   }
 }
 
-function handleLineClick(index) {
-  if (!player) return;
-
-  if (typeof lyrics[index].time === "number") {
-    player.seekTo(lyrics[index].time, true);
+function handleLineClick(i) {
+  const t = lyrics[i]?.time;
+  if (player && typeof t === "number") {
+    player.seekTo(t, true);
     player.playVideo();
   }
 }
 
-/* 🔥 NEW: Show vocab for highlighted line */
+/* =============================================
+   VOCAB PANEL
+============================================= */
+
 function showVocabForLine(line) {
-  // If vocab toggle is OFF or no vocab exists — clear panel
-  if (!showVocab.checked || !line.vocab) {
+  if (!showVocab.checked || !line?.vocab) {
     vocabPanel.innerHTML = "";
     return;
   }
 
-  // Split vocab entries: "word:def; word:def..."
-  const parts = line.vocab.split(";").map((v) => v.trim());
-
-  vocabPanel.innerHTML = parts
-    .map((v) => `<div class="vocab-word">${v}</div>`)
+  const list = line.vocab.split(";").map((x) => x.trim());
+  vocabPanel.innerHTML = list
+    .map((w) => `<div class="vocab-word">${w}</div>`)
     .join("");
 }
 
-/* Re-render lyrics when toggles change */
+/* Toggles re-render lyrics */
 [showKanji, showKana, showRomaji, showEnglish, showVocab].forEach((cb) => {
-  if (cb) cb.addEventListener("change", renderLyrics);
+  cb.addEventListener("change", renderLyrics);
 });
 
-/* Highlight + scroll + vocab update */
+/* =============================================
+   SONG NAVIGATION BUTTONS
+============================================= */
+
+prevSongBtn.addEventListener("click", () => {
+  if (currentSongIndex > 0) loadSong(currentSongIndex - 1);
+});
+
+nextSongBtn.addEventListener("click", () => {
+  if (currentSongIndex < songList.length - 1) loadSong(currentSongIndex + 1);
+});
+
+/* =============================================
+   LYRIC HIGHLIGHT LOOP
+============================================= */
+
+if (speedSlider) {
+  speedSlider.addEventListener("input", () => {
+    if (!player || !player.setPlaybackRate) return;
+
+    const raw = parseFloat(speedSlider.value);
+
+    // YouTube only allows specific rates
+    const allowed =
+      typeof player.getAvailablePlaybackRates === "function"
+        ? player.getAvailablePlaybackRates()
+        : [0.5, 0.75, 1, 1.25, 1.5, 2];
+
+    // snap slider value to the nearest allowed rate
+    let best = allowed[0];
+    let bestDiff = Math.abs(raw - best);
+    for (const r of allowed) {
+      const d = Math.abs(raw - r);
+      if (d < bestDiff) {
+        best = r;
+        bestDiff = d;
+      }
+    }
+
+    player.setPlaybackRate(best);
+
+    if (speedDisplay) {
+      speedDisplay.textContent =
+        best.toFixed(2).replace(/\.00$/, "").replace(/\.0$/, "") + "x";
+    }
+  });
+}
+
 setInterval(() => {
   if (!player?.getCurrentTime) return;
 
-  const time = player.getCurrentTime();
+  const now = player.getCurrentTime();
   let idx = -1;
 
   for (let i = 0; i < lyrics.length; i++) {
-    if (typeof lyrics[i].time === "number" && lyrics[i].time <= time) {
+    if (typeof lyrics[i].time === "number" && lyrics[i].time <= now) {
       idx = i;
     }
   }
@@ -135,14 +217,14 @@ setInterval(() => {
     highlightIndex = idx;
 
     const lines = document.querySelectorAll(".line");
-    lines.forEach((l, i) => l.classList.toggle("highlight", i === idx));
+    lines.forEach((el, i) => el.classList.toggle("highlight", i === idx));
 
     if (idx >= 0) {
-      const lineEl = lines[idx];
-      const offset = Math.max(0, lineEl.offsetTop - 109);
-      lyricsContainer.scrollTo({ top: offset, behavior: "smooth" });
-
-      // 🔥 Show vocab under YouTube player
+      const el = lines[idx];
+      lyricsContainer.scrollTo({
+        top: Math.max(0, el.offsetTop - 230),
+        behavior: "smooth",
+      });
       showVocabForLine(lyrics[idx]);
     } else {
       vocabPanel.innerHTML = "";
@@ -150,4 +232,14 @@ setInterval(() => {
   }
 }, 200);
 
-renderLyrics();
+/* =============================================
+   LOAD SONG LIST (index.json)
+============================================= */
+
+fetch("index.json")
+  .then((res) => res.json())
+  .then((list) => {
+    songList = list;
+    if (songList.length > 0) loadSong(0);
+  })
+  .catch((err) => console.error("❌ Failed to load index.json:", err));

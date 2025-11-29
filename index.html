@@ -31,33 +31,32 @@
               ><input type="checkbox" id="showKanji" checked /> Kanji</label
             >
             <label><input type="checkbox" id="showKana" /> Kana</label>
+            <label><input type="checkbox" id="showRomaji" /> Romaji</label>
+            <label><input type="checkbox" id="showEnglish" /> English</label>
             <label
-              ><input type="checkbox" id="showRomaji" checked /> Romaji</label
+              ><input type="checkbox" id="showVocab" checked /> Vocab</label
             >
-            <label
-              ><input type="checkbox" id="showEnglish" checked /> English</label
-            >
-            <label><input type="checkbox" id="showVocab" /> Vocab</label>
           </div>
         </div>
 
         <div id="lyrics"></div>
-      </div>
-    </div>
 
-    <!-- Centered song navigation arrows -->
-    <div
-      id="songNav"
-      style="
-        margin-top: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-      "
-    >
-      <button id="prevSong" class="song-arrow">⟨</button>
-      <button id="nextSong" class="song-arrow">⟩</button>
+        <div id="speedControl">
+          <span>Speed: <span id="speedDisplay">1x</span></span>
+          <input
+            type="range"
+            id="speedSlider"
+            min="0.25"
+            max="2"
+            step="0.25"
+            value="1"
+          />
+        </div>
+        <div id="songNav">
+          <button id="prevSong" class="song-arrow">⟨</button>
+          <button id="nextSong" class="song-arrow">⟩</button>
+        </div>
+      </div>
     </div>
 
     <!-- YouTube API -->
