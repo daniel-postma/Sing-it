@@ -1,3 +1,13 @@
+/* =========================
+   style.css (UPDATED)
+   Adds support for:
+   - per-line tools (🔊 🎙 ▶ 🙈)
+   - hide-line (memory practice)
+   - practice mode toggle area
+   - mic info card
+   Keeps your current dark aesthetic + layout.
+   ========================= */
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -17,6 +27,7 @@ h1 {
   align-items: flex-start;
   gap: 30px;
   margin-top: 20px;
+  padding: 0 16px;
 }
 
 /* Give the whole player+vocab column a fixed width in the row */
@@ -24,17 +35,15 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 0 0 640px; /* ⬅ move flex here */
+  flex: 0 0 640px; /* ⬅ keep your existing desktop layout */
 }
 
 /* Let the player just size to its contents */
 #player {
-  /* remove this line:
-  flex: 0 0 640px;
-  */
-  width: 100%; /* optional but nice */
+  width: 100%;
 }
 
+/* Lyrics column */
 #lyricsPanel {
   flex: 0 0 400px;
   display: flex;
@@ -42,7 +51,9 @@ h1 {
   align-items: center;
 }
 
+/* Controls */
 #controls {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -50,26 +61,76 @@ h1 {
   margin-bottom: 10px;
 }
 
-#modeBtn,
-#loadBtn,
-#saveBtn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#modeBtn {
-  background: gold;
-  color: #111;
-}
-
 .lang-toggle label {
   margin-right: 8px;
   cursor: pointer;
+  user-select: none;
 }
 
+/* NEW: practice toggle row */
+.practice-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.practice-toggle label {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* NEW: small button style for reveal-all */
+.mini-btn {
+  padding: 6px 10px;
+  border: 1px solid #ffffff40;
+  border-radius: 8px;
+  background: #ffffff10;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.mini-btn:hover {
+  background: #ffffff25;
+  transform: translateY(-1px);
+}
+
+.mini-btn:active {
+  transform: translateY(0);
+}
+
+/* Lyrics header/legend (optional) */
+.lyrics-header {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 6px 0 8px;
+  opacity: 0.9;
+}
+
+.lyrics-header-left {
+  font-weight: bold;
+  letter-spacing: 0.3px;
+}
+
+.lyrics-header-right {
+  display: flex;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: #ccc;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.legend-item {
+  white-space: nowrap;
+}
+
+/* Lyrics scroll area */
 #lyrics {
   width: 100%;
   height: 440px;
@@ -80,6 +141,7 @@ h1 {
   text-align: left;
 }
 
+/* OLD .line (kept for backward compat in case any old markup remains) */
 .line {
   padding: 6px 8px;
   border-radius: 4px;
@@ -92,10 +154,100 @@ h1 {
   background: rgba(255, 255, 255, 0.1);
 }
 
+/* NEW: lyric line layout */
+.lyric-line {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 8px 8px;
+  border-radius: 8px;
+  cursor: default; /* tools are clickable; content area handles seek */
+  transition: background 0.2s;
+  margin-bottom: 8px;
+  border: 1px solid transparent;
+}
+
+.lyric-line:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.lyric-line.highlight {
+  background: rgba(255, 215, 0, 0.25);
+  border-color: rgba(255, 215, 0, 0.35);
+}
+
+/* Tools column */
+.line-tools {
+  display: none; /* hidden until practice mode is enabled */
+  gap: 6px;
+  align-items: center;
+  padding-top: 2px;
+}
+
+/* Show tools only in practice mode */
+#lyrics.practice-on .line-tools {
+  display: inline-flex;
+}
+
+.line-btn {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: #ffffff10;
+  border: 1px solid #ffffff40;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+  user-select: none;
+}
+
+.line-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.line-btn:not(:disabled):hover {
+  background: #ffffff25;
+  transform: translateY(-1px);
+}
+
+.line-btn:not(:disabled):active {
+  transform: translateY(0);
+}
+
+/* Recording state */
+.lyric-line.is-recording .line-btn.rec-line {
+  background: rgba(217, 83, 79, 0.35);
+  border-color: rgba(217, 83, 79, 0.65);
+}
+
+/* Content column */
+.line-content {
+  cursor: pointer; /* clicking lyrics seeks */
+}
+
+.line-text {
+  padding: 2px 0;
+  line-height: 1.25rem;
+}
+
+/* Hide-line (memory practice): hide text but keep spacing */
+.lyric-line.is-hidden .line-text {
+  color: transparent;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.18);
+  user-select: none;
+}
+
+/* Highlight for old markup */
 .highlight {
   background: rgba(255, 215, 0, 0.5);
 }
 
+/* Song nav arrows */
 .song-arrow {
   font-size: 1.8rem;
   padding: 0.3rem 1rem;
@@ -116,12 +268,7 @@ h1 {
   transform: translateY(-2px);
 }
 
-#playerColumn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
+/* Vocab panel */
 #vocabPanel {
   margin-top: 15px;
   width: 640px;
@@ -138,6 +285,12 @@ h1 {
   border-bottom: 1px solid #ffffff20;
 }
 
+/* Optional JP styling */
+.vocab-word.jp {
+  color: #b7e3ff;
+}
+
+/* Speed control */
 #speedControl {
   margin-top: 10px;
   width: 100%;
@@ -156,10 +309,126 @@ h1 {
 #speedSlider {
   flex: 1;
 }
+
+/* Below controls row */
+.below-controls {
+  margin-top: 8px;
+}
+
+/* Song nav */
 #songNav {
   margin-top: 16.2px;
   width: 100%;
   display: flex;
   justify-content: center;
   gap: 2rem;
+}
+
+/* NEW: mic info card under vocab */
+.mic-info {
+  margin-top: 12px;
+  width: 640px;
+  background: #1b1b1b;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: left;
+  border: 1px solid #ffffff20;
+  color: #ddd;
+  font-size: 14px;
+}
+
+.mic-info-title {
+  font-weight: bold;
+  margin-bottom: 6px;
+  color: #fff;
+}
+
+.mic-info-text {
+  opacity: 0.9;
+  line-height: 1.3rem;
+}
+
+.mic-warn {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #bbb;
+  opacity: 0.95;
+}
+
+/* =========================
+   Responsive (keeps desktop the same)
+   ========================= */
+@media (max-width: 1120px) {
+  #container {
+    gap: 18px;
+  }
+  #playerColumn {
+    flex: 0 0 560px;
+  }
+  #vocabPanel,
+  .mic-info {
+    width: 560px;
+  }
+}
+
+@media (max-width: 980px) {
+  #container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #playerColumn,
+  #lyricsPanel {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 720px;
+  }
+
+  #lyricsPanel {
+    max-width: 720px;
+  }
+
+  #vocabPanel,
+  .mic-info {
+    width: 100%;
+    max-width: 720px;
+  }
+
+  #lyrics {
+    max-width: 720px;
+  }
+
+  .lyrics-header {
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 520px) {
+  #container {
+    margin-top: 12px;
+  }
+
+  #lyrics {
+    height: 55vh;
+  }
+
+  .lyric-line {
+    grid-template-columns: 1fr; /* tools stack on top */
+  }
+
+  #lyrics.practice-on .line-tools {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+
+  .line-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  .lyrics-header-right {
+    display: none; /* save space on tiny screens */
+  }
 }

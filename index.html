@@ -1,5 +1,5 @@
 <!-- =========================
-     index.html  (UPDATED)
+     index.html  (UPDATED w/ mic + hide-line UI hooks)
 ========================= -->
 <!DOCTYPE html>
 <html lang="en">
@@ -17,9 +17,21 @@
       <div id="playerColumn">
         <div id="player"></div>
 
-        <!-- 🔥 NEW VOCAB PANEL HERE -->
+        <!-- 🔥 VOCAB PANEL -->
         <div id="vocabPanel">
           <!-- dynamically filled -->
+        </div>
+
+        <!-- 🎙️ MIC / PRACTICE INFO (optional helper area) -->
+        <div id="micInfo" class="mic-info">
+          <div class="mic-info-title">🎙️ Sing Practice</div>
+          <div class="mic-info-text">
+            Tap the mic on a line to record yourself, then play it back to
+            compare. Tap 🙈 to hide a line and try from memory.
+          </div>
+          <div class="mic-warn">
+            Microphone requires permission and works best on HTTPS or localhost.
+          </div>
         </div>
       </div>
 
@@ -34,9 +46,55 @@
             <label><input type="checkbox" id="showRomaji" /> Romaji</label>
             <label><input type="checkbox" id="showEnglish" /> English</label>
           </div>
+
+          <!-- ✅ NEW: Practice options -->
+          <div class="practice-toggle">
+            <label>
+              <input type="checkbox" id="practiceMode" />
+              Practice mode (show mic + hide buttons)
+            </label>
+
+            <button id="revealAllLines" type="button" class="mini-btn">
+              Reveal all lines
+            </button>
+          </div>
         </div>
 
-        <div id="lyrics"></div>
+        <!-- ✅ NEW: Lyrics legend / header row for controls (optional) -->
+        <div id="lyricsHeader" class="lyrics-header">
+          <span class="lyrics-header-left">Lyrics</span>
+          <span class="lyrics-header-right">
+            <span class="legend-item">🔊 line</span>
+            <span class="legend-item">🎙 record</span>
+            <span class="legend-item">▶ play me</span>
+            <span class="legend-item">🙈 hide</span>
+          </span>
+        </div>
+
+        <!-- LYRICS -->
+        <div id="lyrics" class="lyrics-list">
+          <!-- dynamically filled -->
+          <!--
+            Example of a rendered line (your JS will generate these):
+            <div class="lyric-line" data-line-id="0" data-start="12.34" data-end="15.80">
+              <div class="line-tools">
+                <button class="line-btn play-line" type="button" title="Play line">🔊</button>
+                <button class="line-btn rec-line" type="button" title="Record">🎙</button>
+                <button class="line-btn play-rec" type="button" title="Play your recording" disabled>▶</button>
+                <button class="line-btn hide-line" type="button" title="Hide/show line">🙈</button>
+              </div>
+
+              <div class="line-content">
+                <div class="line-text line-kanji">君のことが好きだよ</div>
+                <div class="line-text line-kana">きみのことがすきだよ</div>
+                <div class="line-text line-romaji">kimi no koto ga suki da yo</div>
+                <div class="line-text line-english">I like you</div>
+              </div>
+
+              <audio class="rec-audio" hidden></audio>
+            </div>
+          -->
+        </div>
 
         <div id="speedControl">
           <span>Speed: <span id="speedDisplay">1x</span></span>
@@ -49,12 +107,14 @@
             value="1"
           />
         </div>
-        <div>
+
+        <div class="below-controls">
           <label><input type="checkbox" id="showVocab" checked /> Vocab</label>
           <label
             ><input type="checkbox" id="showTeigi" checked /> 日本語定義</label
           >
         </div>
+
         <div id="songNav">
           <button id="prevSong" class="song-arrow">⟨</button>
           <button id="nextSong" class="song-arrow">⟩</button>
@@ -70,6 +130,8 @@
     </script>
 
     <script src="script.js"></script>
+
+    <!-- Ko-fi overlay widget -->
     <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
     <script>
       kofiWidgetOverlay.draw("danielgagepostma", {

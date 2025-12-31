@@ -1,3 +1,12 @@
+// =========================
+// script.js (UPDATED)
+// Adds:
+// 1) 🎙 Mic per line (record + playback)
+// 2) 🙈 Hide/show specific line (memory practice)
+// 3) Practice mode toggle + Reveal-all button
+// Works on HTTPS or localhost (mic permission required).
+// =========================
+
 let player;
 let highlightIndex = -1;
 
@@ -24,10 +33,73 @@ const nextSongBtn = document.getElementById("nextSong");
 const speedSlider = document.getElementById("speedSlider");
 const speedDisplay = document.getElementById("speedDisplay");
 
-/* =============================================
-   YOUTUBE SETUP
-============================================= */
+// NEW UI (from updated HTML)
+const practiceMode = document.getElementById("practiceMode");
+const revealAllLinesBtn = document.getElementById("revealAllLines");
 
+// =========================
+// Mic + hide-line state
+// =========================
+let activeRecording = null; // { lineEl, recorder, stream, chunks }
+let lineRecordings = new Map(); // lineId -> { url, mimeType }
+let hiddenLineIds = new Set(); // lineId strings
+
+function getSongId() {
+  // stable key per song file/title; fallback to index
+  if (currentSong?.id) return String(currentSong.id);
+  if (currentSong?.title && currentSong?.artist)
+    return `${currentSong.title}__${currentSong.artist}`;
+  return `song_${currentSongIndex}`;
+}
+
+function hiddenKey() {
+  return `singingflow_hiddenLines_${getSongId()}`;
+}
+
+function practiceModeKey() {
+  return `singingflow_practiceMode_${getSongId()}`;
+}
+
+function loadHiddenSet() {
+  try {
+    const raw = localStorage.getItem(hiddenKey());
+    const arr = raw ? JSON.parse(raw) : [];
+    hiddenLineIds = new Set(Array.isArray(arr) ? arr.map(String) : []);
+  } catch {
+    hiddenLineIds = new Set();
+  }
+}
+
+function saveHiddenSet() {
+  localStorage.setItem(hiddenKey(), JSON.stringify([...hiddenLineIds]));
+}
+
+function loadPracticeMode() {
+  try {
+    const raw = localStorage.getItem(practiceModeKey());
+    const val = raw === "1";
+    if (practiceMode) practiceMode.checked = val;
+  } catch {
+    // ignore
+  }
+}
+
+function savePracticeMode() {
+  if (!practiceMode) return;
+  localStorage.setItem(practiceModeKey(), practiceMode.checked ? "1" : "0");
+}
+
+function supportsMic() {
+  return (
+    navigator.mediaDevices &&
+    typeof navigator.mediaDevices.getUserMedia === "function" &&
+    typeof MediaRecorder !== "undefined"
+  );
+}
+
+// =========================
+// YOUTUBE SETUP
+// =========================
 function extractVideoId(urlOrId) {
   if (!urlOrId) return "";
   const match = urlOrId.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
@@ -60,10 +132,9 @@ function onYouTubeIframeAPIReady() {
   if (pendingVideoId) initPlayerWithVideo(pendingVideoId);
 }
 
-/* =============================================
-   SONG LOADING
-============================================= */
-
+// =========================
+// SONG LOADING
+// =========================
 function loadSong(index) {
   if (index < 0 || index >= songList.length) return;
 
@@ -75,6 +146,19 @@ function loadSong(index) {
     .then((json) => {
       currentSong = json;
       lyrics = json.lyrics || [];
+
+      // reset state per song
+      highlightIndex = -1;
+      stopRecordingSafely();
+      lineRecordings.forEach((r) => {
+        try {
+          if (r?.url) URL.revokeObjectURL(r.url);
+        } catch {}
+      });
+      lineRecordings = new Map();
+
+      loadHiddenSet();
+      loadPracticeMode();
 
       const videoId = extractVideoId(json.videoUrl || json.videoId);
       initPlayerWithVideo(videoId);
@@ -90,33 +174,132 @@ function updateSongNavButtons() {
   nextSongBtn.disabled = currentSongIndex >= songList.length - 1;
 }
 
-/* =============================================
-   LYRICS
-============================================= */
-
+// =========================
+// LYRICS RENDER
+// =========================
 function renderLyrics() {
   lyricsContainer.innerHTML = "";
 
+  const isPractice = Boolean(practiceMode?.checked);
+  lyricsContainer.classList.toggle("practice-on", isPractice);
+
   lyrics.forEach((line, i) => {
-    const div = document.createElement("div");
-    div.className = "line";
+    const lineId = String(i);
+
+    // outer wrapper for a line (new structure)
+    const row = document.createElement("div");
+    row.className = "lyric-line";
+    row.dataset.lineId = lineId;
+
+    // start/end for segment play if available
+    if (typeof line.time === "number") row.dataset.start = String(line.time);
+    if (typeof line.endTime === "number")
+      row.dataset.end = String(line.endTime);
+
+    // hidden state
+    if (hiddenLineIds.has(lineId)) row.classList.add("is-hidden");
+
+    // tools (only visible in practice mode via CSS)
+    const tools = document.createElement("div");
+    tools.className = "line-tools";
+    tools.innerHTML = `
+      <button class="line-btn play-line" type="button" title="Play this line">🔊</button>
+      <button class="line-btn rec-line" type="button" title="Record yourself">🎙</button>
+      <button class="line-btn play-rec" type="button" title="Play your recording" disabled>▶</button>
+      <button class="line-btn hide-line" type="button" title="Hide/show line from memory">🙈</button>
+    `;
+
+    // content area
+    const content = document.createElement("div");
+    content.className = "line-content";
 
     const parts = [];
 
     if (showKanji?.checked && line.kanji)
-      parts.push(`<div>${line.kanji}</div>`);
-    if (showKana?.checked && line.kana) parts.push(`<div>${line.kana}</div>`);
+      parts.push(
+        `<div class="line-text line-kanji">${escapeHtml(line.kanji)}</div>`
+      );
+    if (showKana?.checked && line.kana)
+      parts.push(
+        `<div class="line-text line-kana">${escapeHtml(line.kana)}</div>`
+      );
     if (showRomaji?.checked && line.romaji)
-      parts.push(`<div>${line.romaji}</div>`);
+      parts.push(
+        `<div class="line-text line-romaji">${escapeHtml(line.romaji)}</div>`
+      );
     if (showEnglish?.checked && line.english)
-      parts.push(`<div>${line.english}</div>`);
+      parts.push(
+        `<div class="line-text line-english">${escapeHtml(line.english)}</div>`
+      );
 
-    if (parts.length === 0) parts.push(`<div>&nbsp;</div>`);
+    if (parts.length === 0) parts.push(`<div class="line-text">&nbsp;</div>`);
+    content.innerHTML = parts.join("");
 
-    div.innerHTML = parts.join("");
-    div.onclick = () => handleLineClick(i);
+    // hidden recording audio holder
+    const recAudio = document.createElement("audio");
+    recAudio.className = "rec-audio";
+    recAudio.hidden = true;
 
-    lyricsContainer.appendChild(div);
+    // assemble
+    row.appendChild(tools);
+    row.appendChild(content);
+    row.appendChild(recAudio);
+
+    // click on content seeks line (keeps your current behavior)
+    content.addEventListener("click", () => handleLineClick(i));
+
+    // wire tools
+    const playBtn = tools.querySelector(".play-line");
+    const recBtn = tools.querySelector(".rec-line");
+    const playRecBtn = tools.querySelector(".play-rec");
+    const hideBtn = tools.querySelector(".hide-line");
+
+    playBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      handleLineClick(i);
+    });
+
+    hideBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleHideLine(lineId, row);
+    });
+
+    playRecBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const rec = lineRecordings.get(lineId);
+      if (!rec?.url) return;
+      recAudio.src = rec.url;
+      recAudio.play().catch(() => {});
+    });
+
+    recBtn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+
+      if (!supportsMic()) {
+        alert(
+          "Microphone recording isn’t supported in this browser. Try Chrome/Edge on HTTPS or localhost."
+        );
+        return;
+      }
+
+      // toggle: if this line is recording -> stop, else start
+      if (row.classList.contains("is-recording")) {
+        stopRecordingSafely();
+        return;
+      }
+
+      try {
+        await startRecordingForLine(row, lineId, playRecBtn);
+      } catch (err) {
+        console.error(err);
+        alert("Could not start recording. Please allow microphone access.");
+      }
+    });
+
+    // enable play-rec if recording exists for this line
+    if (lineRecordings.has(lineId)) playRecBtn.disabled = false;
+
+    lyricsContainer.appendChild(row);
   });
 
   if (currentSong?.title && currentSong?.artist) {
@@ -134,10 +317,9 @@ function handleLineClick(i) {
   }
 }
 
-/* =============================================
-   VOCAB PANEL
-============================================= */
-
+// =========================
+// VOCAB PANEL
+// =========================
 function showVocabForLine(line) {
   if (!line) {
     vocabPanel.innerHTML = "";
@@ -152,7 +334,9 @@ function showVocabForLine(line) {
       .split(";")
       .map((x) => x.trim())
       .filter(Boolean);
-    chunks.push(...list.map((w) => `<div class="vocab-word">${w}</div>`));
+    chunks.push(
+      ...list.map((w) => `<div class="vocab-word">${escapeHtml(w)}</div>`)
+    );
   }
 
   // 日本語定義
@@ -161,22 +345,125 @@ function showVocabForLine(line) {
       .split(";")
       .map((x) => x.trim())
       .filter(Boolean);
-    chunks.push(...listJ.map((w) => `<div class="vocab-word jp">${w}</div>`));
+    chunks.push(
+      ...listJ.map((w) => `<div class="vocab-word jp">${escapeHtml(w)}</div>`)
+    );
   }
 
-  if (chunks.length === 0) {
-    vocabPanel.innerHTML = "";
-  } else {
-    vocabPanel.innerHTML = chunks.join("");
-  }
+  vocabPanel.innerHTML = chunks.length ? chunks.join("") : "";
 }
 
-/* Lyric-display toggles */
+// =========================
+// PRACTICE: HIDE/REVEAL
+// =========================
+function toggleHideLine(lineId, lineEl) {
+  if (hiddenLineIds.has(lineId)) hiddenLineIds.delete(lineId);
+  else hiddenLineIds.add(lineId);
+
+  saveHiddenSet();
+  lineEl.classList.toggle("is-hidden", hiddenLineIds.has(lineId));
+}
+
+function revealAllLines() {
+  hiddenLineIds.clear();
+  saveHiddenSet();
+  document
+    .querySelectorAll(".lyric-line")
+    .forEach((el) => el.classList.remove("is-hidden"));
+}
+
+// =========================
+// PRACTICE: MIC RECORDING
+// =========================
+async function startRecordingForLine(lineEl, lineId, playRecBtn) {
+  // stop any other active recording
+  stopRecordingSafely();
+
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  const recorder = new MediaRecorder(stream);
+  const chunks = [];
+
+  activeRecording = { lineEl, recorder, stream, chunks };
+
+  lineEl.classList.add("is-recording");
+  const recButton = lineEl.querySelector(".rec-line");
+  if (recButton) recButton.textContent = "⏹";
+
+  recorder.ondataavailable = (e) => {
+    if (e.data && e.data.size > 0) chunks.push(e.data);
+  };
+
+  recorder.onstop = () => {
+    try {
+      // revoke previous url for this line
+      const prev = lineRecordings.get(lineId);
+      if (prev?.url) URL.revokeObjectURL(prev.url);
+
+      const blob = new Blob(chunks, {
+        type: recorder.mimeType || "audio/webm",
+      });
+      const url = URL.createObjectURL(blob);
+      lineRecordings.set(lineId, {
+        url,
+        mimeType: recorder.mimeType || "audio/webm",
+      });
+
+      if (playRecBtn) playRecBtn.disabled = false;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      // cleanup mic
+      try {
+        stream.getTracks().forEach((t) => t.stop());
+      } catch {}
+
+      lineEl.classList.remove("is-recording");
+      const rb = lineEl.querySelector(".rec-line");
+      if (rb) rb.textContent = "🎙";
+
+      activeRecording = null;
+    }
+  };
+
+  recorder.start();
+}
+
+function stopRecordingSafely() {
+  if (
+    activeRecording?.recorder &&
+    activeRecording.recorder.state !== "inactive"
+  ) {
+    try {
+      activeRecording.recorder.stop();
+    } catch {}
+    return;
+  }
+
+  // also ensure stream is stopped if recorder is weird
+  if (activeRecording?.stream) {
+    try {
+      activeRecording.stream.getTracks().forEach((t) => t.stop());
+    } catch {}
+  }
+
+  if (activeRecording?.lineEl) {
+    activeRecording.lineEl.classList.remove("is-recording");
+    const rb = activeRecording.lineEl.querySelector(".rec-line");
+    if (rb) rb.textContent = "🎙";
+  }
+  activeRecording = null;
+}
+
+// =========================
+// TOGGLES
+// =========================
+
+// Lyric-display toggles
 [showKanji, showKana, showRomaji, showEnglish].forEach((cb) => {
   if (cb) cb.addEventListener("change", renderLyrics);
 });
 
-/* Vocab-panel toggles */
+// Vocab-panel toggles
 [showVocab, showTeigi].forEach((cb) => {
   if (cb)
     cb.addEventListener("change", () => {
@@ -188,10 +475,21 @@ function showVocabForLine(line) {
     });
 });
 
-/* =============================================
-   SONG NAVIGATION BUTTONS
-============================================= */
+// Practice mode toggle + reveal all
+if (practiceMode) {
+  practiceMode.addEventListener("change", () => {
+    savePracticeMode();
+    renderLyrics();
+  });
+}
 
+if (revealAllLinesBtn) {
+  revealAllLinesBtn.addEventListener("click", () => revealAllLines());
+}
+
+// =========================
+// SONG NAVIGATION BUTTONS
+// =========================
 prevSongBtn.addEventListener("click", () => {
   if (currentSongIndex > 0) loadSong(currentSongIndex - 1);
 });
@@ -200,10 +498,9 @@ nextSongBtn.addEventListener("click", () => {
   if (currentSongIndex < songList.length - 1) loadSong(currentSongIndex + 1);
 });
 
-/* =============================================
-   SPEED SLIDER
-============================================= */
-
+// =========================
+// SPEED SLIDER
+// =========================
 if (speedSlider) {
   speedSlider.addEventListener("input", () => {
     if (!player || !player.setPlaybackRate) return;
@@ -236,10 +533,9 @@ if (speedSlider) {
   });
 }
 
-/* =============================================
-   LYRIC HIGHLIGHT LOOP
-============================================= */
-
+// =========================
+// LYRIC HIGHLIGHT LOOP
+// =========================
 setInterval(() => {
   if (!player?.getCurrentTime) return;
 
@@ -255,7 +551,7 @@ setInterval(() => {
   if (idx !== highlightIndex) {
     highlightIndex = idx;
 
-    const lines = document.querySelectorAll(".line");
+    const lines = document.querySelectorAll(".lyric-line");
     lines.forEach((el, i) => el.classList.toggle("highlight", i === idx));
 
     if (idx >= 0) {
@@ -271,10 +567,9 @@ setInterval(() => {
   }
 }, 200);
 
-/* =============================================
-   LOAD SONG LIST (index.json)
-============================================= */
-
+// =========================
+// LOAD SONG LIST (index.json)
+// =========================
 fetch("index.json")
   .then((res) => res.json())
   .then((list) => {
@@ -282,3 +577,15 @@ fetch("index.json")
     if (songList.length > 0) loadSong(0);
   })
   .catch((err) => console.error("❌ Failed to load index.json:", err));
+
+// =========================
+// Utils
+// =========================
+function escapeHtml(s) {
+  return String(s)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
