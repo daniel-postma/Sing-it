@@ -10,5 +10,11 @@
     "file": "fireworks.json",
     "title": "Fireworks",
     "artist": "uchiage_hanabi"
+  },
+  {
+    "id": "Melt",
+    "file": "melt.json",
+    "title": "Melt",
+    "artist": "SennaRin"
   }
 ]

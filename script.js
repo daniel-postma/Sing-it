@@ -1,21 +1,23 @@
 // =========================
 // script.js (UPDATED)
+// Uses index.json song list (now supports 3 songs incl. melt.json)
 // Adds:
-// 1) 🎙 Mic per line (record + playback)
-// 2) 🙈 Hide/show specific line (memory practice)
-// 3) Practice mode toggle + Reveal-all button
-// Works on HTTPS or localhost (mic permission required).
+// - Remembers last opened song
+// - Deep link: ?song=melt OR ?song=melt.json OR ?song=Melt
 // =========================
 
 let player;
 let highlightIndex = -1;
 
 let currentSong = null;
+let currentSongMeta = null;
 let lyrics = [];
 
 let songList = [];
 let currentSongIndex = 0;
 let pendingVideoId = null;
+
+const LAST_SONG_REF_KEY = "singingflow_lastSongRef";
 
 const lyricsContainer = document.getElementById("lyrics");
 const vocabPanel = document.getElementById("vocabPanel");
@@ -44,9 +46,25 @@ let activeRecording = null; // { lineEl, recorder, stream, chunks }
 let lineRecordings = new Map(); // lineId -> { url, mimeType }
 let hiddenLineIds = new Set(); // lineId strings
 
+function norm(s) {
+  return String(s ?? "")
+    .trim()
+    .toLowerCase();
+}
+
+function normJsonFile(s) {
+  let x = String(s ?? "").trim();
+  // keep as-is if it's a URL
+  if (/^https?:\/\//i.test(x)) return x;
+  if (!x.toLowerCase().endsWith(".json")) x += ".json";
+  return x;
+}
+
 function getSongId() {
-  // stable key per song file/title; fallback to index
+  // stable key per song id/file/title; fallback to index
+  if (currentSongMeta?.id) return String(currentSongMeta.id);
   if (currentSong?.id) return String(currentSong.id);
+  if (currentSongMeta?.file) return String(currentSongMeta.file);
   if (currentSong?.title && currentSong?.artist)
     return `${currentSong.title}__${currentSong.artist}`;
   return `song_${currentSongIndex}`;
@@ -79,9 +97,7 @@ function loadPracticeMode() {
     const raw = localStorage.getItem(practiceModeKey());
     const val = raw === "1";
     if (practiceMode) practiceMode.checked = val;
-  } catch {
-    // ignore
-  }
+  } catch {}
 }
 
 function savePracticeMode() {
@@ -102,8 +118,10 @@ function supportsMic() {
 // =========================
 function extractVideoId(urlOrId) {
   if (!urlOrId) return "";
-  const match = urlOrId.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
-  return match ? match[1] : urlOrId;
+  const match = String(urlOrId).match(
+    /(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/
+  );
+  return match ? match[1] : String(urlOrId);
 }
 
 function initPlayerWithVideo(videoId) {
@@ -133,15 +151,54 @@ function onYouTubeIframeAPIReady() {
 }
 
 // =========================
-// SONG LOADING
+// SONG LOADING (index.json)
 // =========================
+function updateSongNavButtons() {
+  prevSongBtn.disabled = currentSongIndex <= 0;
+  nextSongBtn.disabled = currentSongIndex >= songList.length - 1;
+}
+
+function setHeaderTitle() {
+  const h1 = document.querySelector("h1");
+  if (!h1) return;
+
+  const title = currentSong?.title || currentSongMeta?.title || "";
+  const artist = currentSong?.artist || currentSongMeta?.artist || "";
+
+  if (title && artist) h1.textContent = `🎵 ${title} - ${artist}`;
+  else if (title) h1.textContent = `🎵 ${title}`;
+  else h1.textContent = "🎵 SingingFlow";
+}
+
+function rememberCurrentSong() {
+  // prefer id; fallback to file
+  const ref = currentSongMeta?.id || currentSongMeta?.file || "";
+  if (ref) localStorage.setItem(LAST_SONG_REF_KEY, String(ref));
+}
+
+function findSongIndexByRef(ref) {
+  const r = norm(ref);
+  if (!r) return -1;
+
+  // match by id OR file (case-insensitive), allow "melt" or "melt.json"
+  const rAsFile = norm(normJsonFile(ref));
+
+  return songList.findIndex((s) => {
+    const idOk = norm(s?.id) === r;
+    const fileOk = norm(s?.file) === r || norm(s?.file) === rAsFile;
+    const fileOk2 = norm(normJsonFile(s?.file)) === rAsFile;
+    return idOk || fileOk || fileOk2;
+  });
+}
+
 function loadSong(index) {
   if (index < 0 || index >= songList.length) return;
 
   currentSongIndex = index;
   const songMeta = songList[index];
+  currentSongMeta = songMeta;
 
-  fetch(songMeta.file)
+  fetch(songMeta.file, { cache: "no-store" })
     .then((res) => res.json())
     .then((json) => {
       currentSong = json;
@@ -163,15 +220,42 @@ function loadSong(index) {
       const videoId = extractVideoId(json.videoUrl || json.videoId);
       initPlayerWithVideo(videoId);
 
+      rememberCurrentSong();
       renderLyrics();
       updateSongNavButtons();
     })
-    .catch((e) => console.error("❌ Failed to load song:", e));
+    .catch((e) => console.error("❌ Failed to load song:", songMeta.file, e));
 }
 
-function updateSongNavButtons() {
-  prevSongBtn.disabled = currentSongIndex <= 0;
-  nextSongBtn.disabled = currentSongIndex >= songList.length - 1;
+async function loadIndexAndBoot() {
+  try {
+    const res = await fetch("index.json", { cache: "no-store" });
+    const list = await res.json();
+
+    if (!Array.isArray(list) || list.length === 0) {
+      throw new Error("index.json did not contain an array of songs.");
+    }
+
+    // minimal validation
+    songList = list.filter((s) => s && s.file);
+
+    // pick starting song: URL param → last used → 0
+    const params = new URLSearchParams(location.search);
+    const paramSong = params.get("song"); // can be id or file
+    const lastRef = localStorage.getItem(LAST_SONG_REF_KEY);
+
+    let startIdx =
+      findSongIndexByRef(paramSong) !== -1
+        ? findSongIndexByRef(paramSong)
+        : findSongIndexByRef(lastRef);
+
+    if (startIdx === -1) startIdx = 0;
+
+    loadSong(startIdx);
+  } catch (err) {
+    console.error("❌ Failed to load index.json:", err);
+    // You could add a fallback list here if you want, but keeping it strict helps catch JSON mistakes.
+  }
 }
 
 // =========================
@@ -186,20 +270,16 @@ function renderLyrics() {
   lyrics.forEach((line, i) => {
     const lineId = String(i);
 
-    // outer wrapper for a line (new structure)
     const row = document.createElement("div");
     row.className = "lyric-line";
     row.dataset.lineId = lineId;
 
-    // start/end for segment play if available
     if (typeof line.time === "number") row.dataset.start = String(line.time);
     if (typeof line.endTime === "number")
       row.dataset.end = String(line.endTime);
 
-    // hidden state
     if (hiddenLineIds.has(lineId)) row.classList.add("is-hidden");
 
-    // tools (only visible in practice mode via CSS)
     const tools = document.createElement("div");
     tools.className = "line-tools";
     tools.innerHTML = `
@@ -209,7 +289,6 @@ function renderLyrics() {
       <button class="line-btn hide-line" type="button" title="Hide/show line from memory">🙈</button>
     `;
 
-    // content area
     const content = document.createElement("div");
     content.className = "line-content";
 
@@ -235,20 +314,19 @@ function renderLyrics() {
     if (parts.length === 0) parts.push(`<div class="line-text">&nbsp;</div>`);
     content.innerHTML = parts.join("");
 
-    // hidden recording audio holder
     const recAudio = document.createElement("audio");
     recAudio.className = "rec-audio";
     recAudio.hidden = true;
 
-    // assemble
     row.appendChild(tools);
     row.appendChild(content);
     row.appendChild(recAudio);
 
-    // click on content seeks line (keeps your current behavior)
-    content.addEventListener("click", () => handleLineClick(i));
+    content.addEventListener("click", () => {
+      handleLineClick(i);
+      showVocabForLine(lyrics[i]);
+    });
 
-    // wire tools
     const playBtn = tools.querySelector(".play-line");
     const recBtn = tools.querySelector(".rec-line");
     const playRecBtn = tools.querySelector(".play-rec");
@@ -257,6 +335,7 @@ function renderLyrics() {
     playBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       handleLineClick(i);
+      showVocabForLine(lyrics[i]);
     });
 
     hideBtn.addEventListener("click", (e) => {
@@ -282,7 +361,6 @@ function renderLyrics() {
         return;
       }
 
-      // toggle: if this line is recording -> stop, else start
       if (row.classList.contains("is-recording")) {
         stopRecordingSafely();
         return;
@@ -296,17 +374,12 @@ function renderLyrics() {
       }
     });
 
-    // enable play-rec if recording exists for this line
     if (lineRecordings.has(lineId)) playRecBtn.disabled = false;
 
     lyricsContainer.appendChild(row);
   });
 
-  if (currentSong?.title && currentSong?.artist) {
-    document.querySelector(
-      "h1"
-    ).textContent = `🎵 ${currentSong.title} - ${currentSong.artist}`;
-  }
+  setHeaderTitle();
 }
 
 function handleLineClick(i) {
@@ -328,7 +401,6 @@ function showVocabForLine(line) {
 
   const chunks = [];
 
-  // English-style vocab
   if (showVocab?.checked && line.vocab) {
     const list = line.vocab
       .split(";")
@@ -339,7 +411,6 @@ function showVocabForLine(line) {
     );
   }
 
-  // 日本語定義
   if (showTeigi?.checked && line.japaneseVocab) {
     const listJ = line.japaneseVocab
       .split(";")
@@ -376,7 +447,6 @@ function revealAllLines() {
 // PRACTICE: MIC RECORDING
 // =========================
 async function startRecordingForLine(lineEl, lineId, playRecBtn) {
-  // stop any other active recording
   stopRecordingSafely();
 
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -395,7 +465,6 @@ async function startRecordingForLine(lineEl, lineId, playRecBtn) {
 
   recorder.onstop = () => {
     try {
-      // revoke previous url for this line
       const prev = lineRecordings.get(lineId);
       if (prev?.url) URL.revokeObjectURL(prev.url);
 
@@ -412,15 +481,12 @@ async function startRecordingForLine(lineEl, lineId, playRecBtn) {
     } catch (err) {
       console.error(err);
     } finally {
-      // cleanup mic
       try {
         stream.getTracks().forEach((t) => t.stop());
       } catch {}
-
       lineEl.classList.remove("is-recording");
       const rb = lineEl.querySelector(".rec-line");
       if (rb) rb.textContent = "🎙";
-
       activeRecording = null;
     }
   };
@@ -439,7 +505,6 @@ function stopRecordingSafely() {
     return;
   }
 
-  // also ensure stream is stopped if recorder is weird
   if (activeRecording?.stream) {
     try {
       activeRecording.stream.getTracks().forEach((t) => t.stop());
@@ -451,31 +516,26 @@ function stopRecordingSafely() {
     const rb = activeRecording.lineEl.querySelector(".rec-line");
     if (rb) rb.textContent = "🎙";
   }
+
   activeRecording = null;
 }
 
 // =========================
 // TOGGLES
 // =========================
-
-// Lyric-display toggles
 [showKanji, showKana, showRomaji, showEnglish].forEach((cb) => {
   if (cb) cb.addEventListener("change", renderLyrics);
 });
 
-// Vocab-panel toggles
 [showVocab, showTeigi].forEach((cb) => {
   if (cb)
     cb.addEventListener("change", () => {
-      if (highlightIndex >= 0 && lyrics[highlightIndex]) {
+      if (highlightIndex >= 0 && lyrics[highlightIndex])
         showVocabForLine(lyrics[highlightIndex]);
-      } else {
-        vocabPanel.innerHTML = "";
-      }
+      else vocabPanel.innerHTML = "";
     });
 });
 
-// Practice mode toggle + reveal all
 if (practiceMode) {
   practiceMode.addEventListener("change", () => {
     savePracticeMode();
@@ -507,13 +567,11 @@ if (speedSlider) {
 
     const raw = parseFloat(speedSlider.value);
 
-    // YouTube only allows specific rates
     const allowed =
       typeof player.getAvailablePlaybackRates === "function"
         ? player.getAvailablePlaybackRates()
         : [0.5, 0.75, 1, 1.25, 1.5, 2];
 
-    // snap slider value to the nearest allowed rate
     let best = allowed[0];
     let bestDiff = Math.abs(raw - best);
     for (const r of allowed) {
@@ -543,9 +601,7 @@ setInterval(() => {
   let idx = -1;
 
   for (let i = 0; i < lyrics.length; i++) {
-    if (typeof lyrics[i].time === "number" && lyrics[i].time <= now) {
-      idx = i;
-    }
+    if (typeof lyrics[i].time === "number" && lyrics[i].time <= now) idx = i;
   }
 
   if (idx !== highlightIndex) {
@@ -568,15 +624,9 @@ setInterval(() => {
 }, 200);
 
 // =========================
-// LOAD SONG LIST (index.json)
+// BOOT (loads index.json)
 // =========================
-fetch("index.json")
-  .then((res) => res.json())
-  .then((list) => {
-    songList = list;
-    if (songList.length > 0) loadSong(0);
-  })
-  .catch((err) => console.error("❌ Failed to load index.json:", err));
+loadIndexAndBoot();
 
 // =========================
 // Utils
